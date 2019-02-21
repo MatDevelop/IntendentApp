@@ -45,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        /*http.
+        http.
                 authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/**").hasAuthority("MANCIPLE").anyRequest()
@@ -57,11 +57,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login").and().exceptionHandling()
-                .accessDeniedPage("/accessDenied");*/
+                .accessDeniedPage("/accessDenied");
     	
     	//dostęp bez logowania
-    	http.csrf().disable();
-        http.authorizeRequests().antMatchers("/").permitAll();
+    	/*http.csrf().disable();
+        http.authorizeRequests().antMatchers("/").permitAll();*/
     }
 
 
