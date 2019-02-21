@@ -3,6 +3,9 @@ package com.intendentapp.insert;
 import com.intendentapp.configuration.OpenXlsx;
 import com.intendentapp.dtomodel.ConsumerEntity;
 import com.intendentapp.model.SaleReport;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
@@ -16,6 +19,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class InsertToSaleExcelReport {
+	
+	private final Logger log = LogManager.getLogger(InsertToSaleExcelReport.class);
+	
     private ConsumerEntity consumer;
     private SaleReport saleReport;
     private OpenXlsx openXlsx;      //instancja pliku excel
@@ -64,6 +70,7 @@ public class InsertToSaleExcelReport {
                     row.getCell(j).setCellStyle(style2);
                 }
                 if(j==9){
+                	//TODO zmienić wszędzie generowanie formuł z poziomu kodu
                     String strFormula= "SUM(G"+String.valueOf(row.getRowNum()+1)+":I"+String.valueOf(row.getRowNum()+1)+")";
                     row.getCell(j).setCellType(XSSFCell.CELL_TYPE_FORMULA);
                     row.getCell(j).setCellFormula(strFormula);

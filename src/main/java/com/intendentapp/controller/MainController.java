@@ -24,10 +24,9 @@ import com.intendentapp.generator.GenerateDayReport;
 import com.intendentapp.generator.GenerateMenu;
 import com.intendentapp.generator.GenerateSaleReport;
 import com.intendentapp.model.*;
-import com.intendentapp.repository.DayReportItemRepository;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -42,7 +41,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -79,13 +77,12 @@ public class MainController {
     @Autowired
     CardPrzychodService cardPrzychodService;
     
-    protected final Logger log = Logger.getLogger(getClass());
+    private final Logger log = LogManager.getLogger(MainController.class);
     
     @GetMapping("/test-method")
     public String testMethod(HttpServletRequest request) throws MalformedURLException{
     	MainTest mt = new MainTest();
     	DayReport dayReport = mt.metodka();
-    	log.info("To jest log testowy nr. 1");
     	
     	GenerateDayReport generateDayReport = new GenerateDayReport(dayReport);
         List<ProductEntity> productEntityList = new ArrayList<ProductEntity>();

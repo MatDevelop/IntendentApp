@@ -4,6 +4,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.intendentapp.dtomodel.DayReportEntity;
 import com.intendentapp.dtomodel.DayReportItemEntity;
 import com.intendentapp.generator.GenerateDayReport;
@@ -11,9 +14,10 @@ import com.intendentapp.model.DayReport;
 
 public class DayReportConverter {
 	
+	private static final Logger log = LogManager.getLogger(DayReportConverter.class);
+	
 	public static DayReportEntity convert(DayReport dayReport, DayReportEntity dayReportEntity, GenerateDayReport generateDayReport) {
     	dayReportEntity.setDate(generateDayReport.getInsert().getDateFromString());
-
     	
     	dayReportEntity.setReportNumber(Integer.parseInt(dayReport.getReportNumber()));
     	dayReportEntity.setDinner1(dayReport.getDinner1());

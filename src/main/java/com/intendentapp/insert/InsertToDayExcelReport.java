@@ -3,6 +3,7 @@ package com.intendentapp.insert;
 import com.intendentapp.model.DayReport;
 import com.intendentapp.configuration.OpenXlsx;
 import com.intendentapp.dtomodel.ProductEntity;
+import com.intendentapp.generator.GenerateDayReport;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -11,6 +12,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class InsertToDayExcelReport {
@@ -36,6 +40,7 @@ public class InsertToDayExcelReport {
     private String podzialPodstawowa;
     private String podzialPrzedszkole;
     private String podzialZerowka;
+    private final Logger log = LogManager.getLogger(InsertToDayExcelReport.class);
 
 
     public InsertToDayExcelReport(){}
@@ -165,7 +170,7 @@ public class InsertToDayExcelReport {
     public void insertSums(){
         openXlsx.updateIntegerCell(12,5, personsSum);
         //openXlsx.updateDoubleCell(41,7, reportCost);
-        avgCost=reportCost/personsSum;
+        avgCost=reportCost/personsSum;		//TODO zrobić try z dzielenia przez 0
         //openXlsx.updateDoubleCell(42,7, avgCost);
     }
 

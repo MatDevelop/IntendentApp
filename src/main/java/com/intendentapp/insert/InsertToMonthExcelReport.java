@@ -4,10 +4,16 @@ import com.intendentapp.configuration.OpenXlsx;
 
 import java.text.DecimalFormat;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class InsertToMonthExcelReport {
 
+	private final Logger log = LogManager.getLogger(InsertToMonthExcelReport.class);
+	
     private OpenXlsx openXlsx;      //instancja pliku excel
     private InsertToDayExcelReport insertDayReport;
+    
 
 
     public InsertToMonthExcelReport() {

@@ -1,6 +1,7 @@
 package com.intendentapp.generator;
 
 import com.intendentapp.model.DayReport;
+import com.intendentapp.converter.DayReportConverter;
 import com.intendentapp.dtomodel.ProductEntity;
 import com.intendentapp.dtomodel.StatsEntity;
 import com.intendentapp.insert.InsertToDayExcelReport;
@@ -8,8 +9,12 @@ import com.intendentapp.insert.InsertToDayExcelReport;
 import java.text.ParseException;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class GenerateDayReport {
     private final String FILENAME="src/main/webapp/static/xlsx/dayrep.xlsx";
+    private final Logger log = LogManager.getLogger(GenerateDayReport.class);
 
     private DayReport dayReport;                      //
     private Integer message, message2;                //zmienna sterująca czy potwierdza się stworzenie raportu czy wystąpił błąd
@@ -35,7 +40,8 @@ public class GenerateDayReport {
             try {
                 insert.insertDate(dayReport.getDate());
             } catch (ParseException e) {
-                e.printStackTrace();
+                log.error("Błąd parsowania daty przy generowaniu raportu dziennego.");
+            	e.printStackTrace();
             }
             //--------------------------
             //wprowadzenie numeru raportu do arkusza

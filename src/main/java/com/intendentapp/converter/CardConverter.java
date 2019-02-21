@@ -3,6 +3,10 @@ package com.intendentapp.converter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.intendentapp.controller.MainController;
 import com.intendentapp.dtomodel.CardEntity;
 import com.intendentapp.dtomodel.CardPrzychodEntity;
 import com.intendentapp.dtomodel.CardRozchodEntity;
@@ -13,6 +17,8 @@ import com.intendentapp.utils.Utils;
 
 public class CardConverter {
 
+	private static final Logger log = LogManager.getLogger(CardConverter.class);
+	
 	public static CardEntity convert(Card card, CardEntity cardEntity, GenerateCard generateCard) {
 		cardEntity.setName(card.getName());
 		cardEntity.setNumber(card.getNumber());
