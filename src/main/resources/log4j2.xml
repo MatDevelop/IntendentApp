@@ -21,6 +21,24 @@
         <Logger name="com.intendentapp.controller" level="all" additivity="false">
             <AppenderRef ref="FileAppender" />
         </Logger>
+        <Logger name="com.intendentapp" level="all" additivity="false">
+            <AppenderRef ref="FileAppender" />
+        </Logger>
+        <Logger name="com.intendentapp.configuration" level="all" additivity="false">
+            <AppenderRef ref="FileAppender" />
+        </Logger>
+        <Logger name="com.intendentapp.converter" level="all" additivity="false">
+            <AppenderRef ref="FileAppender" />
+        </Logger>
+        <Logger name="com.intendentapp.generator" level="all" additivity="false">
+            <AppenderRef ref="FileAppender" />
+        </Logger>
+        <Logger name="com.intendentapp.insert" level="all" additivity="false">
+            <AppenderRef ref="FileAppender" />
+        </Logger>
+        <Logger name="com.intendentapp.utils" level="all" additivity="false">
+            <AppenderRef ref="FileAppender" />
+        </Logger>
 
         <Root>
             <AppenderRef ref="FileAppender" />
