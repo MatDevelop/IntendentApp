@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <Property name="LOG_PATTERN">
+            %d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName} --- [%15.15t] %-30.30c{1.} : %m%n%ex
+        </Property>
+    </Properties>
+    <Appenders>
+        <RollingFile name="FileAppender" fileName="logs/intendentapp.log" 
+             filePattern="logs/intendentapp-%d{yyyy-MM-dd}-%i.log">
+		    <PatternLayout>
+		        <Pattern>${LOG_PATTERN}</Pattern>
+		    </PatternLayout>
+		    <Policies>
+		        <SizeBasedTriggeringPolicy size="1MB" />
+		    </Policies>
+		    <DefaultRolloverStrategy max="10"/>
+		</RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.intendentapp.controller" level="all" additivity="false">
+            <AppenderRef ref="FileAppender" />
+        </Logger>
+
+        <Root>
+            <AppenderRef ref="FileAppender" />
+        </Root>
+    </Loggers>
+</Configuration>
