@@ -196,7 +196,7 @@
     <br><br>
     <!--Copyright-->
         <div class="footersettings">
-            © 2018 Copyright: Mateusz Brugier
+            © 2019 Copyright: Mateusz Brugier
         </div>
     <!--/.Copyright-->
 
