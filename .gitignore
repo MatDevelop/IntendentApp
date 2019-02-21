@@ -1,8 +1,8 @@
 /target/
 
 /logs/
-/monthreports/
-/reports/
+src/main/webapp/static/monthreports/
+src/main/webapp/static/reports/
 SecurityConfiguration.java
 .settings/
 .idea/
