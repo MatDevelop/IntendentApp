@@ -16,9 +16,10 @@ public class DayReportConverter {
 	
 	private static final Logger log = LogManager.getLogger(DayReportConverter.class);
 	
+	private DayReportConverter() {}
+	
 	public static DayReportEntity convert(DayReport dayReport, DayReportEntity dayReportEntity, GenerateDayReport generateDayReport) {
     	dayReportEntity.setDate(generateDayReport.getInsert().getDateFromString());
-    	
     	dayReportEntity.setReportNumber(Integer.parseInt(dayReport.getReportNumber()));
     	dayReportEntity.setDinner1(dayReport.getDinner1());
     	dayReportEntity.setDinner2(dayReport.getDinner2());
@@ -48,7 +49,6 @@ public class DayReportConverter {
     	dayReportEntity.setPodzialPodstawowa(dayReport.getPodzialPodstawowa());
     	dayReportEntity.setPodzialPrzedszkole(dayReport.getPodzialPrzedszkole());
     	dayReportEntity.setPodzialZerowka(dayReport.getPodzialZerowka());
-    	
     	dayReportEntity.setDayReportValue(dayReport.getDayReportValue());
     	dayReportEntity.setDayReportAvg(dayReport.getDayReportAvg());
     	
@@ -72,7 +72,5 @@ public class DayReportConverter {
     	dayReportEntity.setDayReportItems(dayReportItems);
     	
     	return dayReportEntity;
-    	
 	}
-
 }

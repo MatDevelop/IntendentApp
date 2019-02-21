@@ -22,7 +22,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     @Override
     protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException {
-        String targetUrl = determineTargetUrl(authentication);
+    	String targetUrl = determineTargetUrl(authentication);
 
         if (response.isCommitted()) {
             System.out.println("Can't redirect");
@@ -33,10 +33,8 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     }
 
     protected String determineTargetUrl(Authentication authentication) {
-        String url = "";
-
+    	String url = "";
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-
         List<String> roles = new ArrayList<String>();
 
         for (GrantedAuthority a : authorities) {
@@ -51,14 +49,15 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     }
 
     private boolean isManciple(List<String> roles) {
-        if (roles.contains("MANCIPLE")) {
+    	if (roles.contains("MANCIPLE")) {
             return true;
         }
+        
         return false;
     }
 
-    public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
-        this.redirectStrategy = redirectStrategy;
+    public void setRedirectStrategy(RedirectStrategy redirectStrategy) {    
+    	this.redirectStrategy = redirectStrategy;
     }
 
     protected RedirectStrategy getRedirectStrategy() {

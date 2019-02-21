@@ -18,8 +18,17 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class DatabaseConfig {
 	
+    @Autowired
+    private Environment env;
+
+    @Autowired
+    private DataSource dataSource;
+
+    @Autowired
+    private LocalContainerEntityManagerFactoryBean entityManagerFactory;
+	
     @Bean
-    public DataSource    dataSource() {
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(env.getProperty("db.driver"));
         dataSource.setUrl(env.getProperty("db.url"));
@@ -69,14 +78,4 @@ public class DatabaseConfig {
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
-
-
-    @Autowired
-    private Environment env;
-
-    @Autowired
-    private DataSource dataSource;
-
-    @Autowired
-    private LocalContainerEntityManagerFactoryBean entityManagerFactory;
 }

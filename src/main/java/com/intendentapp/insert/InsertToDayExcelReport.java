@@ -3,7 +3,6 @@ package com.intendentapp.insert;
 import com.intendentapp.model.DayReport;
 import com.intendentapp.configuration.OpenXlsx;
 import com.intendentapp.dtomodel.ProductEntity;
-import com.intendentapp.generator.GenerateDayReport;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -66,18 +65,18 @@ public class InsertToDayExcelReport {
     }
 
     public void setProductUnitAmountAndValues(String product, String unitprices, String amounts, String positionValues, String number){
-        this.products = new LinkedList<String>(Arrays.asList(product.split(",")));
+        this.products = new LinkedList<>(Arrays.asList(product.split(",")));
         //usunięcie pustych wartości z listy produktów
         while (products.contains("...")){
             products.remove("...");
         }
-        this.unitprices = new LinkedList<String>(Arrays.asList(unitprices.split(",")));
+        this.unitprices = new LinkedList<>(Arrays.asList(unitprices.split(",")));
         this.unitprices.removeAll(Arrays.asList("",null));
-        this.amounts = new LinkedList<String>(Arrays.asList(amounts.split(",")));
+        this.amounts = new LinkedList<>(Arrays.asList(amounts.split(",")));
         this.amounts.removeAll(Arrays.asList("",null));
-        this.positionValues = new LinkedList<String>(Arrays.asList(positionValues.split(",")));
+        this.positionValues = new LinkedList<>(Arrays.asList(positionValues.split(",")));
         this.positionValues.removeAll(Arrays.asList("",null));
-        this.numbers = new LinkedList<String>(Arrays.asList(number.split(",")));
+        this.numbers = new LinkedList<>(Arrays.asList(number.split(",")));
         this.numbers.removeAll(Arrays.asList("",null));
     }
 
@@ -85,15 +84,15 @@ public class InsertToDayExcelReport {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat dayFormatter = new SimpleDateFormat("EEEE");
         dateFromString = formatter.parse(date);         //konwersja ze String na Date
-        openXlsx.updateStringCell(2,1,new String(date+"   "+dayFormatter.format(dateFromString).substring(0,1).toUpperCase()+
-                dayFormatter.format(dateFromString).substring(1)));
+        openXlsx.updateStringCell(2,1,date+"   "+dayFormatter.format(dateFromString).substring(0,1).toUpperCase()+
+                dayFormatter.format(dateFromString).substring(1));
     }
 
     public void insertRepNumber(String repNumber){
         SimpleDateFormat dayFormatter = new SimpleDateFormat("yyyy");
         int year=Integer.parseInt(dayFormatter.format(dateFromString));
         int lastYear=year-1;
-        openXlsx.updateStringCell(5,0,new String(repNumber+"/"+lastYear+"/"+year));
+        openXlsx.updateStringCell(5,0,repNumber+"/"+lastYear+"/"+year);
     }
 
     public void insertDinner(String dinner1, String dinner2, String dinner3, String dinner4){

@@ -16,6 +16,7 @@ public class ConsumerEntity implements Serializable {
 
     @Column(name = "surname")
     private String surname;
+    
     @Column(name = "address")
     private String address;
 

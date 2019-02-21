@@ -20,7 +20,7 @@ public class ProductService {
 
     public List<ProductEntity> findAll(){
         List<ProductEntity> productEntities = new ArrayList<>();
-        for (ProductEntity productEntity : productRepository.findAll()){
+        for (ProductEntity productEntity : productRepository.findAll()){	//TODO zrobić return productRepository.findAll(). Po co for
             productEntities.add(productEntity);
         }
         return productEntities;

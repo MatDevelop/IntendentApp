@@ -1,16 +1,23 @@
 package com.intendentapp.dtomodel;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 import java.io.Serializable;
 
 @Entity(name="products")
 public class ProductEntity implements Serializable{
 
-    private String name;
-    @Id
+	@Id
+	@Column(name = "number")
     private String number;
+	
+	@Column(name = "name")
+	private String name;
+    
+	@Column(name = "unit")
     private String unit;
+	
+	@Column(name = "unitprice")
     private Double unitprice;
 
     public ProductEntity(){}
@@ -53,5 +60,4 @@ public class ProductEntity implements Serializable{
     public void setUnitprice(Double unitprice) {
         this.unitprice = unitprice;
     }
-    
 }

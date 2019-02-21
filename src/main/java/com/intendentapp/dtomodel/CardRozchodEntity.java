@@ -136,5 +136,4 @@ public class CardRozchodEntity implements Serializable {
 	public void setIdCardDocument(Integer idCardDocument) {
 		this.idCardDocument = idCardDocument;
 	}
-	
 }

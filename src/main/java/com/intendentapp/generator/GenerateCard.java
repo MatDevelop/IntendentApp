@@ -5,9 +5,8 @@ import com.intendentapp.model.Card;
 
 public class GenerateCard {
 	
-	private final String FILENAME="src/main/webapp/static/xlsx/cardrep.xlsx";
+	private static final String FILENAME = "src/main/webapp/static/xlsx/cardrep.xlsx";
 	
-	private Card card;
 	private Integer message;
 	private InsertToCardExcelReport insertToCard;
 	
@@ -15,7 +14,6 @@ public class GenerateCard {
 	
 	public GenerateCard(Card card) {
 		insertToCard = new InsertToCardExcelReport(card, FILENAME);
-		this.card = card;
 	}
 	
 	public void generate() {
@@ -30,7 +28,4 @@ public class GenerateCard {
 	public InsertToCardExcelReport getInsertToCard() {
 		return insertToCard;
 	}
-	
-	
-	
 }

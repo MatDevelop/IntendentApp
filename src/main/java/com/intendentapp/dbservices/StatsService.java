@@ -13,12 +13,23 @@ public class StatsService {
 	
     private final StatsRepository statsRepository;
 
-    public StatsService(StatsRepository statsRepository) {
+    public StatsService(StatsRepository statsRepository){
         this.statsRepository = statsRepository;
     }
 
-    public List<StatsEntity> findAll(){return this.statsRepository.findAll();}
-    public List<StatsEntity> findByMonth_year(String month_year){return this.statsRepository.findByMonth_year(month_year);}
-    public void save(StatsEntity statsEntity){this.statsRepository.save(statsEntity);}
-    public void delete(Integer statid){this.statsRepository.delete(statid);}
+    public List<StatsEntity> findAll(){
+    	return this.statsRepository.findAll();
+    }
+    
+    public List<StatsEntity> findByMonthAndYear(String monthAndYear){
+    	return this.statsRepository.findByMonth_year(monthAndYear);
+    }
+    
+    public void save(StatsEntity statsEntity){
+    	this.statsRepository.save(statsEntity);
+    }
+    
+    public void delete(Integer statid){
+    	this.statsRepository.delete(statid);
+    }
 }

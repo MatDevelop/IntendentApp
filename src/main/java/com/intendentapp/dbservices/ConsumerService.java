@@ -25,7 +25,10 @@ public class ConsumerService {
         return consumerRepository.findOne(id);
     }
 
-    public void save(ConsumerEntity consumerEntity){ consumerRepository.save(consumerEntity);}
+    public void save(ConsumerEntity consumerEntity){ 
+    	consumerRepository.save(consumerEntity);
+    }
+    
     public void delete(Integer id){
         consumerRepository.delete(id);
     }

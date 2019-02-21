@@ -2,23 +2,23 @@ package com.intendentapp.model;
 
 public class Card {
 	
-	public Integer cardId;
-	public String name;
-	public String number;
-	public String shopName;
-	public String unit;
-	public String rowNumbers;	//numery wierszy
-	public String przychodPurchaseDates;
-	public String przychodUnitprices;
-	public String przychodAmounts;
-	public String przychodValues;
-	public String rozchodDatesOut;
-	public String rozchodUnitprices;
-	public String rozchodAmounts;
-	public String rozchodValues;
-	public String rozchodStates;
-	public String rozchodRemainedValues;
-	public String rozchodReportNumbers;
+	private Integer cardId;
+	private String name;
+	private String number;
+	private String shopName;
+	private String unit;
+	private String rowNumbers;	//numery wierszy
+	private String przychodPurchaseDates;
+	private String przychodUnitprices;
+	private String przychodAmounts;
+	private String przychodValues;
+	private String rozchodDatesOut;
+	private String rozchodUnitprices;
+	private String rozchodAmounts;
+	private String rozchodValues;
+	private String rozchodStates;
+	private String rozchodRemainedValues;
+	private String rozchodReportNumbers;
 	public Card(Integer cardId, String name, String number, String shopName, String unit, String rowNumbers,
 			String przychodPurchaseDates, String przychodUnitprices, String przychodAmounts, String przychodValues,
 			String rozchodDatesOut, String rozchodUnitprices, String rozchodAmounts, String rozchodValues,

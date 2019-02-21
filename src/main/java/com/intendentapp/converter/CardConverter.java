@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.intendentapp.controller.MainController;
 import com.intendentapp.dtomodel.CardEntity;
 import com.intendentapp.dtomodel.CardPrzychodEntity;
 import com.intendentapp.dtomodel.CardRozchodEntity;
@@ -19,14 +18,17 @@ public class CardConverter {
 
 	private static final Logger log = LogManager.getLogger(CardConverter.class);
 	
+	private CardConverter() {}
+	
 	public static CardEntity convert(Card card, CardEntity cardEntity, GenerateCard generateCard) {
+		InsertToCardExcelReport insert = generateCard.getInsertToCard();
+		List<CardPrzychodEntity> cardPrzychodEntityList = new ArrayList<>();
+		List<CardRozchodEntity> cardRozchodEntityList = new ArrayList<>();
+		
 		cardEntity.setName(card.getName());
 		cardEntity.setNumber(card.getNumber());
 		cardEntity.setShopName(card.getShopName());
 		cardEntity.setUnit(card.getUnit());
-		InsertToCardExcelReport insert = generateCard.getInsertToCard();
-		List<CardPrzychodEntity> cardPrzychodEntityList = new ArrayList<>();
-		List<CardRozchodEntity> cardRozchodEntityList = new ArrayList<>();
 		
 		for(int i=0; i < insert.getRowNumbers().size(); i++) {
 			//jeśli daty rozchodu i przychodu są puste to znaczy, ze nie ma więcej wierszy
@@ -58,7 +60,4 @@ public class CardConverter {
 		
 		return cardEntity;
 	}
-	
-	
-
 }
