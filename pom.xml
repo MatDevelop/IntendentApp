@@ -1,0 +1,152 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+  
+	<groupId>IntendentApp</groupId>
+  	<artifactId>IntendentApp</artifactId>
+  	<packaging>jar</packaging>
+  	<version>1.0-SNAPSHOT</version>
+
+  	<!--ustawienie wersji spring boot -->
+	<parent>
+  		<groupId>org.springframework.boot</groupId>
+    	<artifactId>spring-boot-starter-parent</artifactId>
+    	<version>1.5.9.RELEASE</version>
+  	</parent>
+  	
+  	<!--korzystanie z Javy w wersji 8 -->
+  	<properties>
+    	<java.version>1.8</java.version>
+    	<start-class>com.intendentapp.Application</start-class>
+  	</properties>
+
+  	<dependencies>
+    	<!--zależność spring boot -->
+    	<dependency>
+      		<groupId>org.springframework.boot</groupId>
+      		<artifactId>spring-boot-starter-web</artifactId>
+    	</dependency>
+    	
+    	<dependency>
+      		<groupId>org.springframework.boot</groupId>
+      		<artifactId>spring-boot-starter-security</artifactId>
+    	</dependency>
+    	
+    	<!--zależność uruchamiająca serwer Tomcat z poziomu aplikacji -->
+    	<dependency>
+      		<groupId>org.apache.tomcat.embed</groupId>
+      		<artifactId>tomcat-embed-jasper</artifactId>
+    	</dependency>
+    	
+    	<!--zależność Hibernate -->
+    	<dependency>
+      		<groupId>org.hibernate</groupId>
+      		<artifactId>hibernate-core</artifactId>
+      		<version>5.2.12.Final</version>
+    	</dependency>
+    	
+    	<!--zależność do obsługi baz danych przez Spring Framework -->
+    	<dependency>
+      		<groupId>org.springframework.data</groupId>
+      		<artifactId>spring-data-jpa</artifactId>
+    	</dependency>
+    	
+    	<!-- zależność pozwalająca na połączenie z bazą mysql -->
+    	<dependency>
+      		<groupId>mysql</groupId>
+      		<artifactId>mysql-connector-java</artifactId>
+      		<version>5.1.46</version>
+    	</dependency>
+    	
+    	<!--biblioteka JSTL -->
+    	<dependency>
+      		<groupId>javax.servlet</groupId>
+      		<artifactId>jstl</artifactId>
+    	</dependency>
+    	
+    	<!--potrzebne do dodania taglib w pliku .jsp-->
+    	<dependency>
+      		<groupId>taglibs</groupId>
+      		<artifactId>standard</artifactId>
+      		<version>1.1.2</version>
+    	</dependency>
+    	
+    	<!--konieczne do połączenie z bazą danych -->
+    	<dependency>
+      		<groupId>javax.xml.bind</groupId>
+      		<artifactId>jaxb-api</artifactId>
+      		<version>2.3.0</version>
+    	</dependency>
+    	
+    	<!--konieczne do uruchomienia aplikacji, Spring tego wymaga-->
+    	<dependency>
+      		<groupId>org.aspectj</groupId>
+      		<artifactId>aspectjweaver</artifactId>
+      		<version>1.8.9</version>
+   		</dependency>
+   		
+	    <!--umożliwia wprowadzanie zmian do kodu bez konieczności ponownego uruchamiania aplikacji-->
+	    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
+    	<dependency>
+      		<groupId>org.springframework.boot</groupId>
+      		<artifactId>spring-boot-devtools</artifactId>
+    	</dependency>
+
+ 		 <!-- zależności do biblioteki Apache POI obsługującej pliki Excel-->
+    	<dependency>
+      		<groupId>org.apache.poi</groupId>
+      		<artifactId>poi</artifactId>
+      		<version>3.9</version>
+    	</dependency>
+    	
+    	<dependency>
+      		<groupId>org.apache.poi</groupId>
+      		<artifactId>poi-ooxml</artifactId>
+      		<version>3.9</version>
+    	</dependency>
+    	
+    	<dependency>
+      		<groupId>org.apache.xmlbeans</groupId>
+      		<artifactId>xmlbeans</artifactId>
+      		<version>2.6.0</version>
+    	</dependency>
+    	
+    	<dependency>
+      		<groupId>org.apache.poi</groupId>
+      		<artifactId>poi-ooxml-schemas</artifactId>
+      		<version>3.10-FINAL</version>
+    	</dependency>
+    	
+    	<dependency>
+      		<groupId>dom4j</groupId>
+      		<artifactId>dom4j</artifactId>
+      		<version>1.6.1</version>
+    	</dependency>
+    	
+	    <!-- Apache Commons-->
+	    <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+    	<dependency>
+      		<groupId>org.apache.commons</groupId>
+      		<artifactId>commons-lang3</artifactId>
+      		<version>3.7</version>
+    	</dependency>
+    	
+    	<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+		<dependency>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-core</artifactId>
+		    <version>2.11.1</version>
+		</dependency>
+  	</dependencies>
+  	
+  	<build>
+    	<finalName>IntendentApp</finalName>
+    	<plugins>
+      		<plugin>
+        		<groupId>org.springframework.boot</groupId>
+        		<artifactId>spring-boot-maven-plugin</artifactId>
+      		</plugin>
+    	</plugins>
+  	</build>
+  	
+</project>
