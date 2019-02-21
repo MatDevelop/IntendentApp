@@ -14,7 +14,7 @@ import com.intendentapp.repository.DayReportItemRepository;
 public class DayReportItemService {
 	
 	private final DayReportItemRepository dayReportItemRepository;
-
+	
 	public DayReportItemService(DayReportItemRepository dayReportItemRepository) {
 		this.dayReportItemRepository = dayReportItemRepository;
 	}

@@ -12,7 +12,8 @@ import com.intendentapp.repository.CardRozchodRepository;
 @Repository
 @Transactional
 public class CardRozchodService {
-private final CardRozchodRepository cardRozchodRepository;
+	
+	private final CardRozchodRepository cardRozchodRepository;
 	
 	public CardRozchodService(CardRozchodRepository cardRozchodRepository) {
 		this.cardRozchodRepository = cardRozchodRepository;

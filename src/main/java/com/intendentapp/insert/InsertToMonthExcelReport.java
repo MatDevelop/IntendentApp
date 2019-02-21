@@ -14,8 +14,6 @@ public class InsertToMonthExcelReport {
     private OpenXlsx openXlsx;      //instancja pliku excel
     private InsertToDayExcelReport insertDayReport;
     
-
-
     public InsertToMonthExcelReport() {
     }
 

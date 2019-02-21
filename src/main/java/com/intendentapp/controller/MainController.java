@@ -55,7 +55,7 @@ import java.util.*;
 public class MainController {
     @Autowired
     ProductService productService;  //obiekt obsługi tabeli products w bazie danych
-
+    
     @Autowired
     ConsumerService consumerService;
 

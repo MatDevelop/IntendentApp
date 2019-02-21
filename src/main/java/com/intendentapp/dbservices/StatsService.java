@@ -10,6 +10,7 @@ import java.util.List;
 @Repository
 @Transactional
 public class StatsService {
+	
     private final StatsRepository statsRepository;
 
     public StatsService(StatsRepository statsRepository) {

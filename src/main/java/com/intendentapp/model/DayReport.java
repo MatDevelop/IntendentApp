@@ -1,7 +1,8 @@
 package com.intendentapp.model;
 
 public class DayReport {
-    private String date;
+    
+	private String date;
     private String reportNumber;
     private String dinner1;
     private String dinner2;

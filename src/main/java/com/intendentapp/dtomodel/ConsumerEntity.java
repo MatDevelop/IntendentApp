@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 @Entity(name="consumers")
 public class ConsumerEntity implements Serializable {
+	
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)

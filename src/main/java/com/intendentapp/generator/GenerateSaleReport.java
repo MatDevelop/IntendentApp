@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 public class GenerateSaleReport {
+	
     private final String FILENAME="src/main/webapp/static/xlsx/salerep.xlsx";
 
     private ConsumerEntity consumer;

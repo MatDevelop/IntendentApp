@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 
 
 public class InsertToDayExcelReport {
+	
     private int productRowNumber;   //zmienna zawierająca numer wiersza do wprowadzenia produktu
     private List<String> products;         //Lista zawierająca nazwy produktów
     private List<String> unitprices;       //Lista zawierająca cenu jednostkowe produktów

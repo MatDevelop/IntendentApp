@@ -41,7 +41,7 @@ public class MainTest {
     	dr.setUnitprice("4.34");
     	dr.setPositionValue("8.62");
     	dr.setNumber("1s");
-    	
+    
     	return dr;
     	
     	/*GenerateDayReport generateDayReport = new GenerateDayReport(dr);

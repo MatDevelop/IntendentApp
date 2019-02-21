@@ -53,4 +53,5 @@ public class ProductEntity implements Serializable{
     public void setUnitprice(Double unitprice) {
         this.unitprice = unitprice;
     }
+    
 }

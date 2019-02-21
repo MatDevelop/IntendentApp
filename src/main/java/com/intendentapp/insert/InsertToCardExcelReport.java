@@ -10,7 +10,7 @@ import com.intendentapp.model.Card;
 import com.intendentapp.utils.Utils;
 
 public class InsertToCardExcelReport {
-
+	
 	private int startRowNumber;	//wiersz początkowy do wprowadzania danych
 	private String name;
 	private String number;

@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 @Transactional
 public class ConsumerService {
-
+	
     private final ConsumerRepository consumerRepository;
 
     public ConsumerService(ConsumerRepository consumerRepository) {

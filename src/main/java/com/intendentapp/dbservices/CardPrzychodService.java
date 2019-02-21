@@ -12,6 +12,7 @@ import com.intendentapp.repository.CardPrzychodRepository;
 @Repository
 @Transactional
 public class CardPrzychodService {
+	
 	private final CardPrzychodRepository cardPrzychodRepository;
 	
 	public CardPrzychodService(CardPrzychodRepository cardPrzychodRepository) {

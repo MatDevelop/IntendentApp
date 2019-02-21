@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class GenerateDayReport {
+	
     private final String FILENAME="src/main/webapp/static/xlsx/dayrep.xlsx";
     private final Logger log = LogManager.getLogger(GenerateDayReport.class);
 

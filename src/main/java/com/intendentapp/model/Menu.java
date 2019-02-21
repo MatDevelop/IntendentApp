@@ -2,7 +2,8 @@ package com.intendentapp.model;
 
 //klasa służąca do pobierania wartości z formularza tworzenia jadłospisu
 public class Menu {
-    private String amount;  //liczba dni w jadłospisie
+    
+	private String amount;  //liczba dni w jadłospisie
     private String date;    //data posiłku
     private String meal;       //posiłek
     private String filename; //nazwa pliku z jadłospisem

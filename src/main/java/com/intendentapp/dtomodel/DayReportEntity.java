@@ -226,5 +226,5 @@ public class DayReportEntity implements Serializable {
 	public void setDayReportItems(List<DayReportItemEntity> dayReportItems) {
 		this.dayReportItems = dayReportItems;
 	}
-
+	
 }

@@ -116,5 +116,4 @@ public class CardEntity implements Serializable{
 	public void setCardRozchodList(List<CardRozchodEntity> cardRozchodList) {
 		this.cardRozchodList = cardRozchodList;
 	}
-	
 }

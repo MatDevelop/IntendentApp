@@ -8,7 +8,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user_role")
 public class UserRole {
-    @Id
+    
+	@Id
     @Column(name = "userID")
     private Integer userID;
 

@@ -34,7 +34,6 @@ public class InsertToSaleExcelReport {
     private List<String> addresses;
     private Integer unpaid;
 
-
     //pobranie sheta i workbooka z openxlsx, wstawienie  styli z projektu test, zamiana nulli w listach na 0.00, wstawianie wierszy
     public InsertToSaleExcelReport(){}
 

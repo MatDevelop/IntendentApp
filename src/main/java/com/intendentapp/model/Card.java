@@ -1,7 +1,7 @@
 package com.intendentapp.model;
 
 public class Card {
-
+	
 	public Integer cardId;
 	public String name;
 	public String number;

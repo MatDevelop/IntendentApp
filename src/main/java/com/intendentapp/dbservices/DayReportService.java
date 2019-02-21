@@ -13,7 +13,7 @@ import com.intendentapp.repository.DayReportRespository;
 @Repository
 @Transactional
 public class DayReportService {
-
+	
 	private final DayReportRespository dayReportRespository;
 
 	public DayReportService(DayReportRespository dayReportRespository) {

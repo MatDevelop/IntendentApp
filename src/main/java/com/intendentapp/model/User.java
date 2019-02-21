@@ -11,13 +11,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "userID")
     private int userID;
+
     @Column(name = "name")
     private String name;
+    
     @Column(name = "password")
     @org.springframework.data.annotation.Transient
     private String password;
+    
     @Column(name = "active")
     private int active;
+    
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "userID"), inverseJoinColumns = @JoinColumn(name = "roleID"))
     private Set<Role> roles;

@@ -72,4 +72,5 @@ public class StatsEntity implements Serializable {
     public void setUnpaid(Integer unpaid) {
         this.unpaid = unpaid;
     }
+    
 }

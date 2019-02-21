@@ -4,6 +4,7 @@ import com.intendentapp.insert.InsertToCardExcelReport;
 import com.intendentapp.model.Card;
 
 public class GenerateCard {
+	
 	private final String FILENAME="src/main/webapp/static/xlsx/cardrep.xlsx";
 	
 	private Card card;

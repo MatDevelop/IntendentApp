@@ -9,7 +9,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.*;
 
 public class OpenXlsx {
-
+	
     private FileInputStream file;   //strumień do pliku
     private XSSFWorkbook workbook;  //instacja skoroszytu
     private XSSFSheet sheet;        //instancja arkuszu w skoroszycie

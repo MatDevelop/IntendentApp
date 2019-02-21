@@ -112,5 +112,4 @@ public class DayReportItemEntity implements Serializable {
 		this.idDayReport = idDayReport;
 	}
 
-	
 }

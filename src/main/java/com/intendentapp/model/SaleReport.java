@@ -3,7 +3,8 @@ package com.intendentapp.model;
 import java.util.List;
 
 public class SaleReport {
-    private List<String> date;
+    
+	private List<String> date;
     private String filename;
     private List<Double> dueamount;
     private List<Double> writeoff;
