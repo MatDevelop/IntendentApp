@@ -27,6 +27,7 @@ import com.intendentapp.staticclasses.Attributes;
 import com.intendentapp.staticclasses.FilePaths;
 import com.intendentapp.staticclasses.JspFileNames;
 import com.intendentapp.staticclasses.Modes;
+import com.intendentapp.testutils.DayReportTestUtils;
 import com.intendentapp.utils.DayReportUtils;
 
 import org.apache.logging.log4j.LogManager;
@@ -84,10 +85,9 @@ public class MainController {
     
     @GetMapping("/test-method")
     public String testMethod(HttpServletRequest request){
-    	MainTest mt = new MainTest();
-    	DayReport dayReport = mt.metodka();
+    	DayReport dayReportTest = DayReportTestUtils.createTestDayReport();
 
-    	GenerateDayReport generateDayReport = new GenerateDayReport(dayReport);
+    	GenerateDayReport generateDayReport = new GenerateDayReport(dayReportTest);
         List<ProductEntity> productEntityList = new ArrayList<>();
         for(String product : generateDayReport.getInsert().getProducts()){
             productEntityList.addAll(productService.findByName(product.trim()));
@@ -102,19 +102,19 @@ public class MainController {
 	            productService.save(product);
 	            lp++;
 	        }	      
-	        dayReport.setDayReportValue(Double.parseDouble(df.format(generateDayReport.getInsert().getReportCost()).replace(",",".")));
-        	dayReport.setDayReportAvg(Double.parseDouble(df.format(generateDayReport.getInsert().getAvgCost()).replace(",","."))); 
+	        dayReportTest.setDayReportValue(Double.parseDouble(df.format(generateDayReport.getInsert().getReportCost()).replace(",",".")));
+	        dayReportTest.setDayReportAvg(Double.parseDouble(df.format(generateDayReport.getInsert().getAvgCost()).replace(",","."))); 
         	List<DayReportEntity> dayReportEntityList = dayReportService.findByDate(generateDayReport.getInsert().getDateFromString());
         	DayReportEntity dayReportEntity = new DayReportEntity();
 	        if(!dayReportEntityList.isEmpty()) {
 	        	dayReportEntity.setIdDayReport(dayReportEntityList.get(0).getIdDayReport());
-	        	List<DayReportItemEntity> dayReportItems = dayReportItemService.findByIdDayReport(dayReportEntityList.get(0).getIdDayReport());
-	        	for(DayReportItemEntity drie : dayReportItems) {
+	        	//List<DayReportItemEntity> dayReportItems = dayReportItemService.findByIdDayReport(dayReportEntityList.get(0).getIdDayReport());
+	        	for(DayReportItemEntity drie : dayReportEntityList.get(0).getDayReportItems()) {
 	        		dayReportItemService.delete(drie.getIdDayReportItem());
 	        	}	        
-	        	dayReportEntity = DayReportConverter.convert(dayReport, dayReportEntity, generateDayReport);
+	        	dayReportEntity = DayReportConverter.convert(dayReportTest, dayReportEntity, generateDayReport);
 	        }else {
-	        	dayReportEntity = DayReportConverter.convert(dayReport, dayReportEntity, generateDayReport);      	
+	        	dayReportEntity = DayReportConverter.convert(dayReportTest, dayReportEntity, generateDayReport);      	
 	        }
 	        dayReportService.save(dayReportEntity);
         	
@@ -213,9 +213,11 @@ public class MainController {
     public String addDayReport(@ModelAttribute DayReport dayReport, BindingResult bindingResult, HttpServletRequest request){
     	GenerateDayReport generateDayReport = new GenerateDayReport(dayReport);
         List<ProductEntity> productEntityList = new ArrayList<>();
+        
         for(String product : generateDayReport.getInsert().getProducts()){
             productEntityList.addAll(productService.findByName(product.trim()));
         }
+        
         generateDayReport.generate(productEntityList);
 
         if(generateDayReport.getMessage() != 2) {
@@ -232,9 +234,7 @@ public class MainController {
         	DayReportEntity dayReportEntity = new DayReportEntity();
 	        if(!dayReportEntityList.isEmpty()) {
 	        	dayReportEntity.setIdDayReport(dayReportEntityList.get(0).getIdDayReport());
-	        	List<DayReportItemEntity> dayReportItems = dayReportItemService.findByIdDayReport(dayReportEntityList.get(0).getIdDayReport());
-	        	//TODO przetestować dayReportEntityList.get(0).getDayReportItems() zamiast pobierać z bazy
-	        	for(DayReportItemEntity drie : dayReportItems) {
+	        	for(DayReportItemEntity drie : dayReportEntityList.get(0).getDayReportItems()) {
 	        		dayReportItemService.delete(drie.getIdDayReportItem());
 	        	}	        
 	        	dayReportEntity = DayReportConverter.convert(dayReport, dayReportEntity, generateDayReport);
@@ -244,6 +244,7 @@ public class MainController {
 	        dayReportService.save(dayReportEntity);
         	
         }
+        
         request.setAttribute(Attributes.MESSAGE, generateDayReport.getMessage());
         request.setAttribute(Attributes.MESSAGE2, generateDayReport.getMessage2());
         request.setAttribute(Modes.MODE, Modes.MODE_MESSAGE);
