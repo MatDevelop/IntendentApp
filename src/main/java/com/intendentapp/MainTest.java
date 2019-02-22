@@ -20,45 +20,8 @@ import com.intendentapp.model.DayReport;
 import com.intendentapp.repository.DayReportRespository;
 
 public class MainTest {
-
-	public DayReport metodka() {
-		DayReport dr = new DayReport();
-    	dr.setDinner1("Obiad 1");
-    	dr.setDinner2("Obiad 2");
-    	dr.setDinner3("Obiad 3");
-    	dr.setDinner4("Obiad 4");
-    	dr.setDate("2000-01-01");
-    	dr.setReportNumber("1");
-    	dr.setPodstawowa("10");
-    	dr.setPrzedszkole("6");
-    	dr.setNauczyciele("5");
-    	dr.setZerowka("");
-    	dr.setPodzialPodstawowa("5+5");
-    	dr.setPodzialPrzedszkole("3+3");
-    	dr.setPodzialZerowka("");
-    	dr.setProduct("Cebula");
-    	dr.setAmount("2");
-    	dr.setUnitprice("4.34");
-    	dr.setPositionValue("8.62");
-    	dr.setNumber("1s");
-    
-    	return dr;
-    	
-    	/*GenerateDayReport generateDayReport = new GenerateDayReport(dr);
-    	
-    	ProductEntity pe = new ProductEntity();
-    	pe.setName("Arbuz");
-    	pe.setNumber("1");
-    	pe.setUnit("kg");
-    	pe.setUnitprice(3.0);
-    	List<ProductEntity> productEntityList = new ArrayList<ProductEntity>();
-    	productEntityList.add(pe);
-    	generateDayReport.generate(productEntityList);*/
-    	
-
-	}
 	
-	public CardEntity returnCardEntity() {
+	public CardEntity returnCardEntity() {	//Zrobić test do zapisu karty materiałowej
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		CardEntity ce = new CardEntity();
 		ce.setName("Parówka cienka");
