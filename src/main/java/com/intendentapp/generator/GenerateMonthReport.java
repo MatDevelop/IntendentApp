@@ -2,6 +2,7 @@ package com.intendentapp.generator;
 
 import com.intendentapp.insert.InsertToDayExcelReport;
 import com.intendentapp.insert.InsertToMonthExcelReport;
+import com.intendentapp.staticclasses.FilePaths;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -17,8 +18,10 @@ public class GenerateMonthReport {
 
     private InsertToDayExcelReport insertDayReport;
     private Integer message;                //zmienna sterująca czy potwierdza się stworzenie raportu czy wystąpił błąd
-    private SimpleDateFormat yearFormatter, monthFormatter;
-    private String month, year;
+    private SimpleDateFormat yearFormatter;
+    private SimpleDateFormat monthFormatter;
+    private String month;
+    private String year;
 
     public GenerateMonthReport() {}
 
@@ -32,13 +35,13 @@ public class GenerateMonthReport {
     	InsertToMonthExcelReport insertMonthReport;
         month = monthFormatter.format(insertDayReport.getDateFromString());
         year = yearFormatter.format(insertDayReport.getDateFromString());
-        File f = new File("src/main/webapp/static/monthreports/" + month + year + ".xlsx");
+        File f = new File(FilePaths.MONTH_REPORTS_FOLDER_PATH + month + year + ".xlsx");
         if(f.exists()){
             insertMonthReport = new InsertToMonthExcelReport(insertDayReport, f.getAbsolutePath(),
-            		"src/main/webapp/static/monthreports/" + month + year + ".xlsx");
+            		FilePaths.MONTH_REPORTS_FOLDER_PATH + month + year + ".xlsx");
         }else{
             insertMonthReport = new InsertToMonthExcelReport(insertDayReport, MONTH_REPORT_TEMPLATE_FILE_PATH,
-            		"src/main/webapp/static/monthreports/" + month + year + ".xlsx");
+            		FilePaths.MONTH_REPORTS_FOLDER_PATH + month + year + ".xlsx");
         }
 
         //wstawienie nazwy miesiąca i roku do raportu miesięcznego

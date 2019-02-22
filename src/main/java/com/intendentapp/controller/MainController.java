@@ -24,6 +24,7 @@ import com.intendentapp.generator.GenerateMenu;
 import com.intendentapp.generator.GenerateSaleReport;
 import com.intendentapp.model.*;
 import com.intendentapp.staticclasses.Attributes;
+import com.intendentapp.staticclasses.FilePaths;
 import com.intendentapp.staticclasses.JspFileNames;
 import com.intendentapp.staticclasses.Modes;
 import com.intendentapp.utils.DayReportUtils;
@@ -80,12 +81,6 @@ public class MainController {
     CardPrzychodService cardPrzychodService;
     
     private final String ADD_PRODUCT_PARAM = "1";
-    private final String REPORTS_FOLDER_PATH = "src/main/webapp/static/reports";
-    private final String MONTH_REPORTS_FOLDER_PATH = "src/main/webapp/static/monthreports";
-    private final String SALES_FOLDER_PATH = "src/main/webapp/static/sales";
-    private final String MENUS_FOLDER_PATH = "src/main/webapp/static/menus";
-    
-    
     
     @GetMapping("/test-method")
     public String testMethod(HttpServletRequest request){
@@ -93,7 +88,7 @@ public class MainController {
     	DayReport dayReport = mt.metodka();
 
     	GenerateDayReport generateDayReport = new GenerateDayReport(dayReport);
-        List<ProductEntity> productEntityList = new ArrayList<ProductEntity>();
+        List<ProductEntity> productEntityList = new ArrayList<>();
         for(String product : generateDayReport.getInsert().getProducts()){
             productEntityList.addAll(productService.findByName(product.trim()));
         }
@@ -256,7 +251,7 @@ public class MainController {
     }
     
     @PostMapping("/save-card")
-    public String saveCard(@ModelAttribute Card card, BindingResult bindingResult, HttpServletRequest request) throws Exception{
+    public String saveCard(@ModelAttribute Card card, BindingResult bindingResult, HttpServletRequest request){
     	GenerateCard generateCard = new GenerateCard(card);
     	generateCard.generate();
     	if(generateCard.getMessage() != 0) {
@@ -386,8 +381,8 @@ public class MainController {
 
     @GetMapping("/viewreports")
     public String viewReports(HttpServletRequest request){
-        File reportsFolder = new File(REPORTS_FOLDER_PATH);
-        File monthReportsFolder = new File(MONTH_REPORTS_FOLDER_PATH);
+        File reportsFolder = new File(FilePaths.REPORTS_FOLDER_PATH);
+        File monthReportsFolder = new File(FilePaths.MONTH_REPORTS_FOLDER_PATH);
         File[] listOfReportsFiles = reportsFolder.listFiles();
         File[] listOfMonthReportsFiles = monthReportsFolder.listFiles();
         request.setAttribute(Attributes.FILES, listOfReportsFiles);
@@ -397,7 +392,7 @@ public class MainController {
     
     @GetMapping("/viewsales")
     public String viewSales(HttpServletRequest request){
-        File salesFolder = new File(SALES_FOLDER_PATH);
+        File salesFolder = new File(FilePaths.SALES_FOLDER_PATH);
         File[] listOfSalesFiles = salesFolder.listFiles();
         request.setAttribute(Attributes.FILES, listOfSalesFiles);
         return JspFileNames.VIEWSALES;
@@ -405,7 +400,7 @@ public class MainController {
     
     @GetMapping("/viewmenus")
     public String viewMenus(HttpServletRequest request){
-        File menusFolder = new File(MENUS_FOLDER_PATH);
+        File menusFolder = new File(FilePaths.MENUS_FOLDER_PATH);
         File[] listOfMenusFiles = menusFolder.listFiles();
         request.setAttribute(Attributes.FILES, listOfMenusFiles);
         return JspFileNames.VIEWMENUS;
@@ -413,7 +408,7 @@ public class MainController {
 
     @GetMapping("/getDayReport")
     public void getDayReport(@RequestParam String fileName, HttpServletRequest request, HttpServletResponse response){
-        Path path = Paths.get(REPORTS_FOLDER_PATH, fileName);
+        Path path = Paths.get(FilePaths.REPORTS_FOLDER_PATH, fileName);
         try{
             response.setContentType("xlsx");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName +"\"");
@@ -425,7 +420,7 @@ public class MainController {
     
     @GetMapping("/getMonthReport")
     public void getMonthReport(@RequestParam String fileName, HttpServletRequest request, HttpServletResponse response){
-        Path path = Paths.get(MONTH_REPORTS_FOLDER_PATH, fileName);
+        Path path = Paths.get(FilePaths.MONTH_REPORTS_FOLDER_PATH, fileName);
         try{
             response.setContentType("xlsx");
             response.setHeader("Content-Disposition","attachment; filename=\"" + fileName +"\"");
@@ -437,7 +432,7 @@ public class MainController {
     
     @GetMapping("/getSaleReport")
     public void getSaleReport(@RequestParam String fileName, HttpServletRequest request, HttpServletResponse response){
-        Path path = Paths.get(SALES_FOLDER_PATH, fileName);
+        Path path = Paths.get(FilePaths.SALES_FOLDER_PATH, fileName);
         try{
             response.setContentType("xlsx");
             response.setHeader("Content-Disposition","attachment; filename=\"" + fileName +"\"");
@@ -449,7 +444,7 @@ public class MainController {
     
     @GetMapping("/getMenu")
     public void getMenu(@RequestParam String fileName, HttpServletRequest request, HttpServletResponse response){
-        Path path = Paths.get(MENUS_FOLDER_PATH, fileName);
+        Path path = Paths.get(FilePaths.MENUS_FOLDER_PATH, fileName);
         try{
             response.setContentType("xlsx");
             response.setHeader("Content-Disposition","attachment; filename=\"" + fileName +"\"");

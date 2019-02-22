@@ -167,9 +167,7 @@ public class InsertToDayExcelReport {
 
     public void insertSums(){
         openXlsx.updateIntegerCell(12, 5, personsSum);
-        //openXlsx.updateDoubleCell(41,7, reportCost);
         avgCost = reportCost / personsSum;		//TODO zrobić try z dzielenia przez 0
-        //openXlsx.updateDoubleCell(42,7, avgCost);
     }
 
     public List<String> getProducts() {

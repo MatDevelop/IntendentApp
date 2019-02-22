@@ -1,6 +1,7 @@
 package com.intendentapp.generator;
 
 import com.intendentapp.model.Menu;
+import com.intendentapp.staticclasses.FilePaths;
 import com.intendentapp.configuration.OpenXlsx;
 
 import java.text.ParseException;
@@ -29,7 +30,7 @@ public class GenerateMenu {
     public GenerateMenu(Menu menu) {
         dates = Arrays.asList(menu.getDate().split(","));   //rozdzielenie tekstu składającego się z dat oddzielonego przecinkami
         meals = Arrays.asList(menu.getMeal().split(","));   //rozdzielenie tekstu składającego się z posiłków oddzielonego przecinkami
-        openXlsx = new OpenXlsx(MENU_TEMPLATE_FILE_PATH, "src/main/webapp/static/menus/" + menu.getFilename()+"menu.xlsx");     //utworzenie obiektu pliku excelowego
+        openXlsx = new OpenXlsx(MENU_TEMPLATE_FILE_PATH, FilePaths.MENUS_FOLDER_PATH + menu.getFilename()+"menu.xlsx");     //utworzenie obiektu pliku excelowego
         this.dateExcelRowNumber = 4;                                             //pierwszy wiersz gdzie należy wprowadzić daty w pliku excel
         this.mealExcelRowNumber = 6;                                              //pierwszy wiersz gdzie należy wprowadzić posiłki w pliku excel
     }

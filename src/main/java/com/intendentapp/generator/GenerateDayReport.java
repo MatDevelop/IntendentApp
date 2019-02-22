@@ -1,7 +1,6 @@
 package com.intendentapp.generator;
 
 import com.intendentapp.model.DayReport;
-import com.intendentapp.converter.DayReportConverter;
 import com.intendentapp.dtomodel.ProductEntity;
 import com.intendentapp.insert.InsertToDayExcelReport;
 
@@ -15,10 +14,11 @@ public class GenerateDayReport {
 	
 	private final Logger log = LogManager.getLogger(GenerateDayReport.class);
 	
-    private final String DAY_REPORT_TEMPLATE_FILE_PATH="src/main/webapp/static/xlsx/dayrep.xlsx";
+    private final String DAY_REPORT_TEMPLATE_FILE_PATH = "src/main/webapp/static/xlsx/dayrep.xlsx";
    
     private DayReport dayReport;
-    private Integer message, message2;                //zmienna sterująca czy potwierdza się stworzenie raportu czy wystąpił błąd
+    private Integer message;                //zmienna sterująca czy potwierdza się stworzenie raportu czy wystąpił błąd
+    private Integer message2;                //zmienna sterująca czy potwierdza się stworzenie raportu czy wystąpił błąd
     private InsertToDayExcelReport insert;
     private GenerateMonthReport generateMonthReport;
 
@@ -42,7 +42,7 @@ public class GenerateDayReport {
                 insert.insertDate(dayReport.getDate());
             } catch (ParseException e) {
                 log.error("Błąd parsowania daty przy generowaniu raportu dziennego.");
-            	e.printStackTrace();
+            	log.error(e);
             }
             //--------------------------
             //wprowadzenie numeru raportu do arkusza
@@ -66,13 +66,14 @@ public class GenerateDayReport {
             message = insert.getOpenXlsx().save();
             if(message != 1){
                 message2 = 0;
+                log.error("Błąd przy wprowadzaniu dziennego raportu do Excela.");
             }else{
                 generateMonthReport = new GenerateMonthReport(insert);
-                message2=generateMonthReport.generate();
+                message2 = generateMonthReport.generate();
             }
-
         }else{
             message=2;
+            log.error("Prawdopodobnie pominięto wiersz lub któreś z pól.");
         }
 
     }

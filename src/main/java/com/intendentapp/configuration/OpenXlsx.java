@@ -7,8 +7,6 @@ import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import com.intendentapp.controller.MainController;
-
 import java.io.*;
 
 public class OpenXlsx {
@@ -19,11 +17,9 @@ public class OpenXlsx {
     private XSSFWorkbook workbook;  //instacja skoroszytu
     private XSSFSheet sheet;        //instancja arkuszu w skoroszycie
     private Cell cell;              //komórka w skoroszycie
-    private String filename;        //nazwa pliku
     private String outFilename;        //nazwa pliku do zapisania
 
     public OpenXlsx(String filename, String outFilename) {  //konstruktor
-        this.filename = filename; 
         try{
             file = new FileInputStream(new File(filename));
             this.outFilename = outFilename;
