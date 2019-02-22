@@ -1,6 +1,7 @@
 package com.intendentapp.insert;
 
 import com.intendentapp.model.DayReport;
+import com.intendentapp.staticclasses.FilePaths;
 import com.intendentapp.configuration.OpenXlsx;
 import com.intendentapp.dtomodel.ProductEntity;
 
@@ -47,7 +48,7 @@ public class InsertToDayExcelReport {
 
     public InsertToDayExcelReport(DayReport dayReport, String filename){
         this.productRowNumber = 16;
-        openXlsx = new OpenXlsx(filename, "src/main/webapp/static/reports/" + dayReport.getDate() + ".xlsx");     //utworzenie obiektu pliku excelowego
+        openXlsx = new OpenXlsx(filename, FilePaths.REPORTS_FOLDER_PATH + "/" + dayReport.getDate() + ".xlsx");     //utworzenie obiektu pliku excelowego
         date = dayReport.getDate();
         this.dinner1 = "1 ";
         this.dinner2 = "2 ";

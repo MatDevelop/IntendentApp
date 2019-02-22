@@ -49,7 +49,7 @@ public class GenerateSaleReport {
         
         month = monthFormatter.format(dateFromString);
         year = yearFormatter.format(dateFromString);
-        insertSale = new InsertToSaleExcelReport(consumer, saleReport, SALE_REPORT_FILE_PATH, FilePaths.SALES_FOLDER_PATH + month+year + "sale.xlsx");
+        insertSale = new InsertToSaleExcelReport(consumer, saleReport, SALE_REPORT_FILE_PATH, FilePaths.SALES_FOLDER_PATH + "/" + month+year + "sale.xlsx");
         insertSale.createRows();
         insertSale.insertLp();
         insertSale.insertDate();

@@ -35,13 +35,13 @@ public class GenerateMonthReport {
     	InsertToMonthExcelReport insertMonthReport;
         month = monthFormatter.format(insertDayReport.getDateFromString());
         year = yearFormatter.format(insertDayReport.getDateFromString());
-        File f = new File(FilePaths.MONTH_REPORTS_FOLDER_PATH + month + year + ".xlsx");
+        File f = new File(FilePaths.MONTH_REPORTS_FOLDER_PATH + "/" + month + year + ".xlsx");
         if(f.exists()){
             insertMonthReport = new InsertToMonthExcelReport(insertDayReport, f.getAbsolutePath(),
-            		FilePaths.MONTH_REPORTS_FOLDER_PATH + month + year + ".xlsx");
+            		FilePaths.MONTH_REPORTS_FOLDER_PATH + "/" + month + year + ".xlsx");
         }else{
             insertMonthReport = new InsertToMonthExcelReport(insertDayReport, MONTH_REPORT_TEMPLATE_FILE_PATH,
-            		FilePaths.MONTH_REPORTS_FOLDER_PATH + month + year + ".xlsx");
+            		FilePaths.MONTH_REPORTS_FOLDER_PATH + "/" + month + year + ".xlsx");
         }
 
         //wstawienie nazwy miesiąca i roku do raportu miesięcznego
