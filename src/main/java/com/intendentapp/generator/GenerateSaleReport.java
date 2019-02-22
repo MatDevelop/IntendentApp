@@ -15,7 +15,7 @@ public class GenerateSaleReport {
 	
 	private final Logger log = LogManager.getLogger(GenerateSaleReport.class);
 	
-    private final String FILENAME="src/main/webapp/static/xlsx/salerep.xlsx";
+    private final String SALE_REPORT_FILE_PATH="src/main/webapp/static/xlsx/salerep.xlsx";
 
     private ConsumerEntity consumer;
     private InsertToSaleExcelReport insertSale;
@@ -41,12 +41,12 @@ public class GenerateSaleReport {
             dateFromString = formatter.parse(saleReport.getFilename());
         }catch (ParseException ex){
         	log.error("Błąd przy parsowaniu daty w zedstawieniu sprzedaży.");
-            ex.printStackTrace();
+            log.error(ex);
         }
         
         month = monthFormatter.format(dateFromString);
         year = yearFormatter.format(dateFromString);
-        insertSale = new InsertToSaleExcelReport(consumer, saleReport, FILENAME, "src/main/webapp/static/sales/" + month+year + "sale.xlsx");
+        insertSale = new InsertToSaleExcelReport(consumer, saleReport, SALE_REPORT_FILE_PATH, "src/main/webapp/static/sales/" + month+year + "sale.xlsx");
         insertSale.createRows();
         insertSale.insertLp();
         insertSale.insertDate();

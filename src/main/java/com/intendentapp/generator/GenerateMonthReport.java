@@ -6,12 +6,16 @@ import com.intendentapp.insert.InsertToMonthExcelReport;
 import java.io.File;
 import java.text.SimpleDateFormat;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class GenerateMonthReport {
 	
-    private final String FILENAME="src/main/webapp/static/xlsx/monthrep.xlsx";
+	private final Logger log = LogManager.getLogger(GenerateMonthReport.class);
+	
+    private final String MONTH_REPORT_TEMPLATE_FILE_PATH = "src/main/webapp/static/xlsx/monthrep.xlsx";
 
     private InsertToDayExcelReport insertDayReport;
-    private InsertToMonthExcelReport insertMonthReport;
     private Integer message;                //zmienna sterująca czy potwierdza się stworzenie raportu czy wystąpił błąd
     private SimpleDateFormat yearFormatter, monthFormatter;
     private String month, year;
@@ -25,13 +29,16 @@ public class GenerateMonthReport {
     }
 
     public Integer generate(){
+    	InsertToMonthExcelReport insertMonthReport;
         month = monthFormatter.format(insertDayReport.getDateFromString());
         year = yearFormatter.format(insertDayReport.getDateFromString());
         File f = new File("src/main/webapp/static/monthreports/" + month + year + ".xlsx");
         if(f.exists()){
-            insertMonthReport = new InsertToMonthExcelReport(insertDayReport, f.getAbsolutePath(), "src/main/webapp/static/monthreports/" + month + year + ".xlsx");
+            insertMonthReport = new InsertToMonthExcelReport(insertDayReport, f.getAbsolutePath(),
+            		"src/main/webapp/static/monthreports/" + month + year + ".xlsx");
         }else{
-            insertMonthReport = new InsertToMonthExcelReport(insertDayReport, FILENAME, "src/main/webapp/static/monthreports/" + month + year + ".xlsx");
+            insertMonthReport = new InsertToMonthExcelReport(insertDayReport, MONTH_REPORT_TEMPLATE_FILE_PATH,
+            		"src/main/webapp/static/monthreports/" + month + year + ".xlsx");
         }
 
         //wstawienie nazwy miesiąca i roku do raportu miesięcznego
@@ -39,6 +46,7 @@ public class GenerateMonthReport {
         message = insertMonthReport.insertRowDayReport();
         if(message != 1){     //błąd we wprowadzaniu wierszy
             insertMonthReport.getOpenXlsx().close();
+            log.error("Błąd przy wprowadzaniu wierszy w raporcie miesięcznym.");
             return message;
         }
         return insertMonthReport.getOpenXlsx().save();

@@ -67,7 +67,7 @@ public class InsertToDayExcelReport {
     public void setProductUnitAmountAndValues(String product, String unitprices, String amounts, String positionValues, String number){
         this.products = new LinkedList<>(Arrays.asList(product.split(",")));
         //usunięcie pustych wartości z listy produktów
-        while (products.contains("...")){
+        while (products.contains("...")){	//TODO zrobić jak niżej
             products.remove("...");
         }
         this.unitprices = new LinkedList<>(Arrays.asList(unitprices.split(",")));

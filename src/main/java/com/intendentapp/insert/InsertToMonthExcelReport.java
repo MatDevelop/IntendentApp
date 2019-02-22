@@ -54,9 +54,10 @@ public class InsertToMonthExcelReport {
                 return 1;
             }
             if(i == 32){
-                return 3;   //za mało wierszy w raporcie miesięcznym
+            	log.error("Przeroczono liczbę wierszy dostępnych w raporcie miesięcznym");
+                return 3;   //za mało wierszy w raporcie miesięcznym    
             }
-        }
+        }   
         return 0;
     }
 

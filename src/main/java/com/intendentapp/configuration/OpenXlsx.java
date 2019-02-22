@@ -32,10 +32,10 @@ public class OpenXlsx {
             cell = null;
         }catch (FileNotFoundException e){
             log.error("Nie ma pliku o ścieżce: " + filename);
-            e.printStackTrace();
+            log.error(e);
         }catch (IOException e){
             log.error("Błąd wejścia/wyjścia przy czytaniu pliku Excel");
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -69,9 +69,11 @@ public class OpenXlsx {
             return 1;
         }catch (FileNotFoundException e){
         	log.error("Nie ma pliku o ścieżce: " + outFilename);
+        	log.error(e);
             return 0;
         }catch (IOException e){
         	log.error("Błąd wejścia/wyjścia przy zapisie pliku Excel. Ścieżka: " + outFilename);
+        	log.error(e);
             return 0;
         }
     }
@@ -93,6 +95,7 @@ public class OpenXlsx {
             file.close();
         }catch (IOException e){
         	log.error("Błąd wejścia/wyjścia przy zamknięciu pliku Excel. Ścieżka: " + outFilename);
+        	log.error(e);
         }
     }
 }

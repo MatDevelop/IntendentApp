@@ -53,7 +53,7 @@ public class InsertToSaleExcelReport {
 
     public void createRows(){
         int i=1;
-        for(String name : names){
+        for(String name : names){	//zrobic zwykłego fora z i=1 i przetestować
             int rows = sheet.getLastRowNum();
             sheet.shiftRows(i, rows, 1);
             sheet.createRow(i);
@@ -73,8 +73,6 @@ public class InsertToSaleExcelReport {
                     row.getCell(j).setCellFormula(strFormula);
                     row.getCell(j).setCellStyle(style2);
                 }
-
-
             }
             i++;
         }

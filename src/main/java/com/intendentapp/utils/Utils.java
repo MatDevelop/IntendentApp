@@ -44,7 +44,8 @@ public class Utils {
 		try {
 			return Double.parseDouble(df.format(Double.parseDouble(doubleInString)).replace(",","."));
 		}catch (NumberFormatException e) {
-			System.out.println("Błąd przy parsowaniu String na Double");
+			log.error("Błąd przy parsowaniu String na Double");
+			log.error(e);
 		}
 		
 		return new Double("0.00");
@@ -54,9 +55,9 @@ public class Utils {
 		try {
 			return Integer.parseInt(integerInString);
 		} catch (NumberFormatException e) {
-			System.out.println("Błąd przy parsowaniu String na Integer");
+			log.error("Błąd przy parsowaniu String na Integer");
+			log.error(e);
 		}
-		
 		return 0;
 	}
 }

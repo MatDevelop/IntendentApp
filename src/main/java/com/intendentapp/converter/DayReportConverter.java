@@ -51,11 +51,11 @@ public class DayReportConverter {
     	dayReportEntity.setPodzialZerowka(dayReport.getPodzialZerowka());
     	dayReportEntity.setDayReportValue(dayReport.getDayReportValue());
     	dayReportEntity.setDayReportAvg(dayReport.getDayReportAvg());
-    	
-    	
+    	   	
     	DecimalFormat df=new java.text.DecimalFormat("0.00");
     	List<DayReportItemEntity> dayReportItems = new ArrayList<>();
     	int lp=1;
+    	
     	for(int i=0; i < generateDayReport.getInsert().getProducts().size(); i++) {
     		DayReportItemEntity dayReportItem = new DayReportItemEntity();
         	dayReportItem.setLp(lp);
@@ -67,7 +67,6 @@ public class DayReportConverter {
         	dayReportItems.add(dayReportItem);
         	lp++;
     	}
-    	
     	
     	dayReportEntity.setDayReportItems(dayReportItems);
     	

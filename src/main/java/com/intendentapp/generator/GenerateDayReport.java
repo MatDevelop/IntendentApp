@@ -15,7 +15,7 @@ public class GenerateDayReport {
 	
 	private final Logger log = LogManager.getLogger(GenerateDayReport.class);
 	
-    private final String FILENAME="src/main/webapp/static/xlsx/dayrep.xlsx";
+    private final String DAY_REPORT_TEMPLATE_FILE_PATH="src/main/webapp/static/xlsx/dayrep.xlsx";
    
     private DayReport dayReport;
     private Integer message, message2;                //zmienna sterująca czy potwierdza się stworzenie raportu czy wystąpił błąd
@@ -25,7 +25,7 @@ public class GenerateDayReport {
     public GenerateDayReport(){}
 
     public GenerateDayReport(DayReport dayReport) {
-        this.insert = new InsertToDayExcelReport(dayReport, FILENAME);
+        this.insert = new InsertToDayExcelReport(dayReport, DAY_REPORT_TEMPLATE_FILE_PATH);
         this.insert.setProductUnitAmountAndValues(dayReport.getProduct(), dayReport.getUnitprice(), dayReport.getAmount(), dayReport.getPositionValue(), dayReport.getNumber());
         this.dayReport = dayReport;
 

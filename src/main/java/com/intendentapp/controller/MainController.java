@@ -17,6 +17,7 @@ import com.intendentapp.dtomodel.ConsumerEntity;
 import com.intendentapp.dtomodel.DayReportEntity;
 import com.intendentapp.dtomodel.DayReportItemEntity;
 import com.intendentapp.dtomodel.ProductEntity;
+import com.intendentapp.exceptions.NoFindCardException;
 import com.intendentapp.generator.GenerateCard;
 import com.intendentapp.generator.GenerateDayReport;
 import com.intendentapp.generator.GenerateMenu;
@@ -276,7 +277,9 @@ public class MainController {
 	    		cardEntity = CardConverter.convert(card, cardEntity, generateCard);
 		    	cardService.save(cardEntity);
 	    	}else {
-	    		throw new Exception("Nie ma takiej karty materiałowej.");
+	    		NoFindCardException nfce = new NoFindCardException("Nie ma takiej karty materiałowej.");
+	    		log.error(nfce);
+	    		throw nfce;
 	    	}
     	}
     	request.setAttribute(Attributes.MESSAGE, generateCard.getMessage());
@@ -416,7 +419,7 @@ public class MainController {
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName +"\"");
             response.getOutputStream().write(Files.readAllBytes(path));
         }catch (IOException e){
-            e.printStackTrace();
+        	log.error(e);
         }
     }
     
@@ -428,7 +431,7 @@ public class MainController {
             response.setHeader("Content-Disposition","attachment; filename=\"" + fileName +"\"");
             response.getOutputStream().write(Files.readAllBytes(path));
         }catch (IOException e){
-            e.printStackTrace();
+        	log.error(e);
         }
     }
     
@@ -440,19 +443,19 @@ public class MainController {
             response.setHeader("Content-Disposition","attachment; filename=\"" + fileName +"\"");
             response.getOutputStream().write(Files.readAllBytes(path));
         }catch (IOException e){
-            e.printStackTrace();
+        	log.error(e);
         }
     }
     
     @GetMapping("/getMenu")
-    public void getSMenu(@RequestParam String fileName, HttpServletRequest request, HttpServletResponse response){
+    public void getMenu(@RequestParam String fileName, HttpServletRequest request, HttpServletResponse response){
         Path path = Paths.get(MENUS_FOLDER_PATH, fileName);
         try{
             response.setContentType("xlsx");
             response.setHeader("Content-Disposition","attachment; filename=\"" + fileName +"\"");
             response.getOutputStream().write(Files.readAllBytes(path));
         }catch (IOException e){
-            e.printStackTrace();
+        	log.error(e);
         }
     }
 
