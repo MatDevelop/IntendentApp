@@ -1,14 +1,12 @@
 package com.intendentapp.generator;
 
 import com.intendentapp.dtomodel.ConsumerEntity;
-import com.intendentapp.dtomodel.StatsEntity;
 import com.intendentapp.insert.InsertToSaleExcelReport;
 import com.intendentapp.model.SaleReport;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -62,22 +60,6 @@ public class GenerateSaleReport {
         insertSale.insertSums();
         message = insertSale.getOpenXlsx().save();
         return 0;
-    }
-
-    public StatsEntity getStatsEntity(List<StatsEntity> statsEntityList){
-        if(statsEntityList.isEmpty()){
-            StatsEntity statsEntity = new StatsEntity();
-            statsEntity.setMonth_year(month+" "+year);
-            statsEntity.setConsumers(insertSale.getNames().size());
-            statsEntity.setReports(0);
-            statsEntity.setUnpaid(insertSale.getUnpaid());
-            return statsEntity;
-        }else {
-            StatsEntity statsEntity = statsEntityList.get(0);
-            statsEntity.setConsumers(insertSale.getNames().size());
-            statsEntity.setUnpaid(insertSale.getUnpaid());
-            return statsEntity;
-        }
     }
 
     public String getMonth() {

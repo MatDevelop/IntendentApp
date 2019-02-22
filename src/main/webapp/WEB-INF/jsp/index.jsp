@@ -26,7 +26,7 @@
                 <ul class="nav navbar-nav">
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="stats"><span class="glyphicon glyphicon-stats"></span> Statystyki</a></li>
+                    <!--  <li><a href="stats"><span class="glyphicon glyphicon-stats"></span> Statystyki</a></li> -->
                     <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Wyloguj</a></li>
                 </ul>
             </div>

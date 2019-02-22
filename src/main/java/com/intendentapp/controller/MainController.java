@@ -10,7 +10,6 @@ import com.intendentapp.dbservices.ConsumerService;
 import com.intendentapp.dbservices.DayReportItemService;
 import com.intendentapp.dbservices.DayReportService;
 import com.intendentapp.dbservices.ProductService;
-import com.intendentapp.dbservices.StatsService;
 import com.intendentapp.dtomodel.CardEntity;
 import com.intendentapp.dtomodel.CardPrzychodEntity;
 import com.intendentapp.dtomodel.CardRozchodEntity;
@@ -18,7 +17,6 @@ import com.intendentapp.dtomodel.ConsumerEntity;
 import com.intendentapp.dtomodel.DayReportEntity;
 import com.intendentapp.dtomodel.DayReportItemEntity;
 import com.intendentapp.dtomodel.ProductEntity;
-import com.intendentapp.dtomodel.StatsEntity;
 import com.intendentapp.generator.GenerateCard;
 import com.intendentapp.generator.GenerateDayReport;
 import com.intendentapp.generator.GenerateMenu;
@@ -27,7 +25,6 @@ import com.intendentapp.model.*;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.taglibs.standard.lang.jstl.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -54,14 +51,14 @@ import java.util.*;
  */
 @Controller
 public class MainController {
+	
+	private final Logger log = LogManager.getLogger(MainController.class);
+	
     @Autowired
     ProductService productService;  //obiekt obsługi tabeli products w bazie danych
     
     @Autowired
     ConsumerService consumerService;
-
-    @Autowired
-    StatsService statsService;
     
     @Autowired
     DayReportService dayReportService;
@@ -77,9 +74,7 @@ public class MainController {
     
     @Autowired
     CardPrzychodService cardPrzychodService;
-    
-    private final Logger log = LogManager.getLogger(MainController.class);
-    
+
     private final String ATTRIBUTE_MESSAGE = "message";
     
     @GetMapping("/test-method")
@@ -93,8 +88,6 @@ public class MainController {
             productEntityList.addAll(productService.findByName(product.trim()));
         }
         generateDayReport.generate(productEntityList);
-        /*StatsEntity statsEntity = generateDayReport.getStatsEntity(statsService.findByMonth_year(generateDayReport.getGenerateMonthReport().getMonth()+" "+generateDayReport.getGenerateMonthReport().getYear()));
-        statsService.save(statsEntity);*/
 
         if(generateDayReport.getMessage() != 2) {
 	        int lp=0;
@@ -192,8 +185,6 @@ public class MainController {
     public String addSaleReport(@ModelAttribute ConsumerEntity consumer, @ModelAttribute SaleReport saleReport, BindingResult bindingResult, HttpServletRequest request){
         GenerateSaleReport generateSaleReport = new GenerateSaleReport(consumer, saleReport);
         generateSaleReport.generate();
-        StatsEntity statsEntity = generateSaleReport.getStatsEntity(statsService.findByMonthAndYear(generateSaleReport.getMonth()+" "+ generateSaleReport.getYear()));
-        statsService.save(statsEntity);
         request.setAttribute(ATTRIBUTE_MESSAGE, generateSaleReport.getMessage());
         request.setAttribute("mode", "MODE_MESSAGE");
         return "sales";
@@ -236,8 +227,6 @@ public class MainController {
             productEntityList.addAll(productService.findByName(product.trim()));
         }
         generateDayReport.generate(productEntityList);
-        /*StatsEntity statsEntity = generateDayReport.getStatsEntity(statsService.findByMonth_year(generateDayReport.getGenerateMonthReport().getMonth()+" "+generateDayReport.getGenerateMonthReport().getYear()));
-        statsService.save(statsEntity);*/
 
         if(generateDayReport.getMessage() != 2) {
 	        int lp = 0;
@@ -477,21 +466,6 @@ public class MainController {
 
     }
 
-    @GetMapping("/stats")
-    public String stats(HttpServletRequest request){
-        request.setAttribute("stats", statsService.findAll());
-        return "stats";
-    }
-    
-    @GetMapping("/resetstats")
-    public String resetStats(HttpServletRequest request){
-        List<StatsEntity> statsEntityList = statsService.findAll();
-        for (StatsEntity se : statsEntityList){
-            statsService.delete(se.getStatid());
-        }
-        return "stats";
-    }
-
     public List<String> productsNameSortByName(){
         List<ProductEntity> productEntityList = new ArrayList<>(productService.findAll());
         List<String> products = new ArrayList<>();
@@ -523,5 +497,4 @@ public class MainController {
         });
         return consumerEntityList;
     }
-
 }

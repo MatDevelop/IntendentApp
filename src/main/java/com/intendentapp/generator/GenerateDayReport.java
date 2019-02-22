@@ -3,7 +3,6 @@ package com.intendentapp.generator;
 import com.intendentapp.model.DayReport;
 import com.intendentapp.converter.DayReportConverter;
 import com.intendentapp.dtomodel.ProductEntity;
-import com.intendentapp.dtomodel.StatsEntity;
 import com.intendentapp.insert.InsertToDayExcelReport;
 
 import java.text.ParseException;
@@ -76,21 +75,6 @@ public class GenerateDayReport {
             message=2;
         }
 
-    }
-
-    public StatsEntity getStatsEntity(List<StatsEntity> statsEntityList){
-        if(statsEntityList.isEmpty()){
-            StatsEntity statsEntity = new StatsEntity();
-            statsEntity.setMonth_year(generateMonthReport.getMonth() + " " + generateMonthReport.getYear());
-            statsEntity.setConsumers(0);
-            statsEntity.setReports(1);
-            statsEntity.setUnpaid(0);
-            return statsEntity;
-        }else {
-            StatsEntity statsEntity = statsEntityList.get(0);
-            statsEntity.setReports(statsEntity.getReports() + 1);
-            return statsEntity;
-        }
     }
 
     public GenerateMonthReport getGenerateMonthReport() {
