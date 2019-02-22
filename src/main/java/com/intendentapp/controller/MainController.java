@@ -108,7 +108,6 @@ public class MainController {
         	DayReportEntity dayReportEntity = new DayReportEntity();
 	        if(!dayReportEntityList.isEmpty()) {
 	        	dayReportEntity.setIdDayReport(dayReportEntityList.get(0).getIdDayReport());
-	        	//List<DayReportItemEntity> dayReportItems = dayReportItemService.findByIdDayReport(dayReportEntityList.get(0).getIdDayReport());
 	        	for(DayReportItemEntity drie : dayReportEntityList.get(0).getDayReportItems()) {
 	        		dayReportItemService.delete(drie.getIdDayReportItem());
 	        	}	        
@@ -139,6 +138,7 @@ public class MainController {
         if (!(auth instanceof AnonymousAuthenticationToken) && roles.contains("MANCIPLE")) {
         	return ("redirect:/home");
         }
+        
         return JspFileNames.LOGIN;
     }
 
@@ -275,7 +275,7 @@ public class MainController {
 	    	}else {
 	    		NoFindCardException nfce = new NoFindCardException("Nie ma takiej karty materiałowej.");
 	    		log.error(nfce);
-	    		throw nfce;
+	    		throw nfce;	//TODO Sprawdzić czy przerywa program czy nie
 	    	}
     	}
     	request.setAttribute(Attributes.MESSAGE, generateCard.getMessage());

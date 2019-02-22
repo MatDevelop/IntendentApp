@@ -21,7 +21,7 @@ public class DayReportTestUtils {
     	dayReport.setPodzialPodstawowa("5+5");
     	dayReport.setPodzialPrzedszkole("3+3");
     	dayReport.setPodzialZerowka("");
-    	dayReport.setProduct("Cebula");
+    	dayReport.setProduct("Cebula,...,...");
     	dayReport.setAmount("2");
     	dayReport.setUnitprice("4.34");
     	dayReport.setPositionValue("8.62");
