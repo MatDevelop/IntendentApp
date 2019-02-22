@@ -14,10 +14,11 @@ import org.apache.logging.log4j.Logger;
 
 public class GenerateDayReport {
 	
+	private final Logger log = LogManager.getLogger(GenerateDayReport.class);
+	
     private final String FILENAME="src/main/webapp/static/xlsx/dayrep.xlsx";
-    private final Logger log = LogManager.getLogger(GenerateDayReport.class);
-
-    private DayReport dayReport;                      //
+   
+    private DayReport dayReport;
     private Integer message, message2;                //zmienna sterująca czy potwierdza się stworzenie raportu czy wystąpił błąd
     private InsertToDayExcelReport insert;
     private GenerateMonthReport generateMonthReport;
@@ -27,16 +28,16 @@ public class GenerateDayReport {
     public GenerateDayReport(DayReport dayReport) {
         this.insert = new InsertToDayExcelReport(dayReport, FILENAME);
         this.insert.setProductUnitAmountAndValues(dayReport.getProduct(), dayReport.getUnitprice(), dayReport.getAmount(), dayReport.getPositionValue(), dayReport.getNumber());
-        this.dayReport=dayReport;
+        this.dayReport = dayReport;
 
     }
 
     public void generate(List<ProductEntity> productEntityList){
         //sprawdzenie czy wprowadzono wszystkie wartości w każdym wierszu. Nie może być sytuacji gdzie podano nazwę a nie podano ceny lub ilości i odwrotnie
-        if((insert.getProducts().size()==insert.getUnitprices().size()) &&
-                (insert.getProducts().size()==insert.getAmounts().size()) &&
-                (insert.getUnitprices().size()==insert.getAmounts().size()) &&
-                (insert.getPositionValues().size()==insert.getProducts().size())){
+        if((insert.getProducts().size() == insert.getUnitprices().size()) &&
+                (insert.getProducts().size() == insert.getAmounts().size()) &&
+                (insert.getUnitprices().size() == insert.getAmounts().size()) &&
+                (insert.getPositionValues().size() == insert.getProducts().size())){
             //wprowadzenie daty do arkusza
             try {
                 insert.insertDate(dayReport.getDate());
@@ -64,8 +65,8 @@ public class GenerateDayReport {
             //wprowadzenie sumy osób i wartości produktów oraz wyliczenie średniej
             insert.insertSums();
             message = insert.getOpenXlsx().save();
-            if(message!=1){
-                message2=0;
+            if(message != 1){
+                message2 = 0;
             }else{
                 generateMonthReport = new GenerateMonthReport(insert);
                 message2=generateMonthReport.generate();
@@ -80,14 +81,14 @@ public class GenerateDayReport {
     public StatsEntity getStatsEntity(List<StatsEntity> statsEntityList){
         if(statsEntityList.isEmpty()){
             StatsEntity statsEntity = new StatsEntity();
-            statsEntity.setMonth_year(generateMonthReport.getMonth()+" "+generateMonthReport.getYear());
+            statsEntity.setMonth_year(generateMonthReport.getMonth() + " " + generateMonthReport.getYear());
             statsEntity.setConsumers(0);
             statsEntity.setReports(1);
             statsEntity.setUnpaid(0);
             return statsEntity;
         }else {
             StatsEntity statsEntity = statsEntityList.get(0);
-            statsEntity.setReports(statsEntity.getReports()+1);
+            statsEntity.setReports(statsEntity.getReports() + 1);
             return statsEntity;
         }
     }
@@ -103,6 +104,7 @@ public class GenerateDayReport {
     public Integer getMessage() {
         return message;
     }
+    
     public Integer getMessage2() {
         return message2;
     }

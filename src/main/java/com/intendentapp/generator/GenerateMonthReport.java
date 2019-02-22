@@ -16,8 +16,7 @@ public class GenerateMonthReport {
     private SimpleDateFormat yearFormatter, monthFormatter;
     private String month, year;
 
-    public GenerateMonthReport() {
-    }
+    public GenerateMonthReport() {}
 
     public GenerateMonthReport(InsertToDayExcelReport insertDayReport) {
         this.insertDayReport = insertDayReport;
@@ -26,21 +25,19 @@ public class GenerateMonthReport {
     }
 
     public Integer generate(){
-        month=monthFormatter.format(insertDayReport.getDateFromString());
-        year=yearFormatter.format(insertDayReport.getDateFromString());
-        File f = new File("src/main/webapp/static/monthreports/"+month+year+".xlsx");
+        month = monthFormatter.format(insertDayReport.getDateFromString());
+        year = yearFormatter.format(insertDayReport.getDateFromString());
+        File f = new File("src/main/webapp/static/monthreports/" + month + year + ".xlsx");
         if(f.exists()){
-            insertMonthReport = new InsertToMonthExcelReport(insertDayReport,f.getAbsolutePath(), "src/main/webapp/static/monthreports/"+month+year+".xlsx");
-            System.out.println(f.exists());
+            insertMonthReport = new InsertToMonthExcelReport(insertDayReport, f.getAbsolutePath(), "src/main/webapp/static/monthreports/" + month + year + ".xlsx");
         }else{
-            insertMonthReport = new InsertToMonthExcelReport(insertDayReport,FILENAME, "src/main/webapp/static/monthreports/"+month+year+".xlsx");
-            System.out.println(month+" "+year);
+            insertMonthReport = new InsertToMonthExcelReport(insertDayReport, FILENAME, "src/main/webapp/static/monthreports/" + month + year + ".xlsx");
         }
 
         //wstawienie nazwy miesiąca i roku do raportu miesięcznego
         insertMonthReport.insertMonthAndYear(month, year);
         message = insertMonthReport.insertRowDayReport();
-        if(message!=1){     //błąd we wprowadzaniu wierszy
+        if(message != 1){     //błąd we wprowadzaniu wierszy
             insertMonthReport.getOpenXlsx().close();
             return message;
         }
@@ -58,5 +55,4 @@ public class GenerateMonthReport {
     public Integer getMessage() {
         return message;
     }
-
 }

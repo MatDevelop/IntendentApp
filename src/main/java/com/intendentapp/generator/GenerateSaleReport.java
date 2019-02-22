@@ -10,7 +10,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class GenerateSaleReport {
+	
+	private final Logger log = LogManager.getLogger(GenerateSaleReport.class);
 	
     private final String FILENAME="src/main/webapp/static/xlsx/salerep.xlsx";
 
@@ -33,13 +38,16 @@ public class GenerateSaleReport {
 
     public Integer generate(){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM");
+        
         try {
             dateFromString = formatter.parse(saleReport.getFilename());
         }catch (ParseException ex){
+        	log.error("Błąd przy parsowaniu daty w zedstawieniu sprzedaży.");
             ex.printStackTrace();
         }
-        month=monthFormatter.format(dateFromString);
-        year=yearFormatter.format(dateFromString);
+        
+        month = monthFormatter.format(dateFromString);
+        year = yearFormatter.format(dateFromString);
         insertSale = new InsertToSaleExcelReport(consumer, saleReport, FILENAME, "src/main/webapp/static/sales/" + month+year + "sale.xlsx");
         insertSale.createRows();
         insertSale.insertLp();
@@ -52,7 +60,7 @@ public class GenerateSaleReport {
         insertSale.insertExcess();
         insertSale.insertOverdue();
         insertSale.insertSums();
-        message=insertSale.getOpenXlsx().save();
+        message = insertSale.getOpenXlsx().save();
         return 0;
     }
 

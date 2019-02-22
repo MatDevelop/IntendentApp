@@ -21,11 +21,10 @@ public class GenerateMenu {
     private Integer message;        //zmienna sterująca czy potwierdza się stworzenie raportu czy wystąpił błąd
     private Date dateFromString;    //data przekonwertowana ze Stringa
 
-    //kontruktor
     public GenerateMenu(Menu menu) {
         dates = Arrays.asList(menu.getDate().split(","));   //rozdzielenie tekstu składającego się z dat oddzielonego przecinkami
         meals = Arrays.asList(menu.getMeal().split(","));   //rozdzielenie tekstu składającego się z posiłków oddzielonego przecinkami
-        openXlsx = new OpenXlsx(FILENAME, "src/main/webapp/static/menus/"+menu.getFilename()+"menu.xlsx");     //utworzenie obiektu pliku excelowego
+        openXlsx = new OpenXlsx(FILENAME, "src/main/webapp/static/menus/" + menu.getFilename()+"menu.xlsx");     //utworzenie obiektu pliku excelowego
         this.date = 4;                                             //pierwszy wiersz gdzie należy wprowadzić daty w pliku excel
         this.meal = 6;                                              //pierwszy wiersz gdzie należy wprowadzić posiłki w pliku excel
     }
@@ -40,14 +39,14 @@ public class GenerateMenu {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            openXlsx.updateStringCell(this.date,0,new String(dayFormatter.format(dateFromString)+" - "+date).toUpperCase());
+            openXlsx.updateStringCell(this.date, 0, dayFormatter.format(dateFromString)+" - "+date.toUpperCase());
             this.date=this.date+5;
         }
         for(String meal : meals){
-            openXlsx.updateStringCell(this.meal,0,meal);
-            this.meal=this.meal+5;
+            openXlsx.updateStringCell(this.meal, 0, meal);
+            this.meal = this.meal + 5;
         }
-        message=openXlsx.save();
+        message = openXlsx.save();
     }
 
     public Integer getMessage() {

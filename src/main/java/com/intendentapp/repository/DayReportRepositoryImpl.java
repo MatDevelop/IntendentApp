@@ -27,7 +27,4 @@ public class DayReportRepositoryImpl implements DayReportRepositoryCustom{
 		query.setParameter(1, date);
 		return query.getResultList();
 	}
-	
-	
-
 }

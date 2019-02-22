@@ -25,7 +25,4 @@ public class DayReportItemRepositoryImpl implements DayReportItemRepositoryCusto
 		query.setParameter(1, idDayReport);
 		return query.getResultList();
 	}
-	
-	
-
 }

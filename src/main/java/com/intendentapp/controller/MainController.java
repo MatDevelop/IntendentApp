@@ -27,6 +27,7 @@ import com.intendentapp.model.*;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.taglibs.standard.lang.jstl.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -85,7 +86,7 @@ public class MainController {
     public String testMethod(HttpServletRequest request) throws MalformedURLException{
     	MainTest mt = new MainTest();
     	DayReport dayReport = mt.metodka();
-    	
+
     	GenerateDayReport generateDayReport = new GenerateDayReport(dayReport);
         List<ProductEntity> productEntityList = new ArrayList<ProductEntity>();
         for(String product : generateDayReport.getInsert().getProducts()){
