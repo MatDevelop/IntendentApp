@@ -22,6 +22,10 @@ import com.intendentapp.generator.GenerateDayReport;
 import com.intendentapp.generator.GenerateMenu;
 import com.intendentapp.generator.GenerateSaleReport;
 import com.intendentapp.model.*;
+import com.intendentapp.staticclasses.Attributes;
+import com.intendentapp.staticclasses.JspFileNames;
+import com.intendentapp.staticclasses.Modes;
+import com.intendentapp.utils.DayReportUtils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,7 +42,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -74,11 +77,17 @@ public class MainController {
     
     @Autowired
     CardPrzychodService cardPrzychodService;
-
-    private final String ATTRIBUTE_MESSAGE = "message";
+    
+    private final String ADD_PRODUCT_PARAM = "1";
+    private final String REPORTS_FOLDER_PATH = "src/main/webapp/static/reports";
+    private final String MONTH_REPORTS_FOLDER_PATH = "src/main/webapp/static/monthreports";
+    private final String SALES_FOLDER_PATH = "src/main/webapp/static/sales";
+    private final String MENUS_FOLDER_PATH = "src/main/webapp/static/menus";
+    
+    
     
     @GetMapping("/test-method")
-    public String testMethod(HttpServletRequest request) throws MalformedURLException{
+    public String testMethod(HttpServletRequest request){
     	MainTest mt = new MainTest();
     	DayReport dayReport = mt.metodka();
 
@@ -118,9 +127,6 @@ public class MainController {
     	return "Poszlo";
     }
     
-    
-    
-
     @GetMapping("/")
     public String home(HttpServletRequest request){
         return "redirect:/login";
@@ -137,29 +143,29 @@ public class MainController {
         if (!(auth instanceof AnonymousAuthenticationToken) && roles.contains("MANCIPLE")) {
         	return ("redirect:/home");
         }
-        return "login";
+        return JspFileNames.LOGIN;
     }
 
     //wyświetlenie strony głównej
     @GetMapping("/home")
     public String homeManciple(HttpServletRequest request){
-        request.setAttribute("mode", "MODE_HOME");
-        return "index";
+        request.setAttribute(Modes.MODE, Modes.MODE_HOME);
+        return JspFileNames.INDEX;
     }
     
     //wybór ilości dni do wprowadzenia do jadłospisu
     @GetMapping("/menu")
     public String setDayCount(HttpServletRequest request){
-        request.setAttribute("mode", "MODE_DAYSAMOUNT");
-        return "menu";
+        request.setAttribute(Modes.MODE, Modes.MODE_DAYSAMOUNT);
+        return JspFileNames.MENU;
     }
     
     //metoda obsługująca wyświetlenie formularza utworzenia jadłospisu
     @PostMapping("/menu")
     public String menuPost(@ModelAttribute Menu menu, BindingResult bindingResult, HttpServletRequest request){
-        request.setAttribute("formamounts", Integer.valueOf(menu.getAmount()));
-        request.setAttribute("mode", "MODE_FORMS");
-        return "menu";
+        request.setAttribute(Attributes.FORMAMOUNTS, Integer.valueOf(menu.getAmount()));
+        request.setAttribute(Modes.MODE, Modes.MODE_FORM);
+        return JspFileNames.MENU;
     }
     
     //metoda generująca plik z jadłospisem
@@ -167,17 +173,17 @@ public class MainController {
     public String addMenu(@ModelAttribute Menu menu, BindingResult bindingResult, HttpServletRequest request){
         GenerateMenu generateMenu = new GenerateMenu(menu);
         generateMenu.generate();
-        request.setAttribute(ATTRIBUTE_MESSAGE, generateMenu.getMessage());
-        request.setAttribute("mode", "MODE_MESSAGE");
-        return "menu";
+        request.setAttribute(Attributes.MESSAGE, generateMenu.getMessage());
+        request.setAttribute(Modes.MODE, Modes.MODE_MESSAGE);
+        return JspFileNames.MENU;
     }
 
     //wyświetlenie formularza tworzenia nowego zestawienia sprzedaży
     @GetMapping("/sales")
     public String sales(HttpServletRequest request){
-        request.setAttribute("consumers", consumersObjectSortedBySurname());
-        request.setAttribute("mode", "MODE_FORM");
-        return "sales";
+        request.setAttribute(Attributes.CONSUMERS, consumersObjectSortedBySurname());
+        request.setAttribute(Modes.MODE, Modes.MODE_FORM);
+        return JspFileNames.SALES;
     }
     
     //dodanie zestawienia sprzedaży
@@ -185,37 +191,25 @@ public class MainController {
     public String addSaleReport(@ModelAttribute ConsumerEntity consumer, @ModelAttribute SaleReport saleReport, BindingResult bindingResult, HttpServletRequest request){
         GenerateSaleReport generateSaleReport = new GenerateSaleReport(consumer, saleReport);
         generateSaleReport.generate();
-        request.setAttribute(ATTRIBUTE_MESSAGE, generateSaleReport.getMessage());
-        request.setAttribute("mode", "MODE_MESSAGE");
-        return "sales";
+        request.setAttribute(Attributes.MESSAGE, generateSaleReport.getMessage());
+        request.setAttribute(Modes.MODE, Modes.MODE_MESSAGE);
+        return JspFileNames.SALES;
     }
     
     //wyświetlenie formularza tworzenia nowego raportu
     @GetMapping("/dayreport")
     public String dayReport(HttpServletRequest request){
-        request.setAttribute("productlist", productsObjectSortedByName());
-        request.setAttribute("mode", "MODE_FORM");
-        return "dayreport";
+        request.setAttribute(Attributes.PRODUCT_LIST, productsObjectSortedByName());
+        request.setAttribute(Modes.MODE, Modes.MODE_FORM);
+        return JspFileNames.DAYREPORT;
     }
     
     @GetMapping("/dane-testowe")
     public String dodajDaneTestowe(HttpServletRequest request) {
-    	DayReport dr = new DayReport();
-    	dr.setDinner1("Obiad 1");
-    	dr.setDinner2("Obiad 2");
-    	dr.setDinner3("Obiad 3");
-    	dr.setDinner4("Obiad 4");
-    	dr.setDate("2000-01-01");
-    	dr.setReportNumber("1");
-    	dr.setPodstawowa("10");
-    	dr.setPrzedszkole("6");
-    	dr.setNauczyciele("5");
-    	dr.setPodzialPodstawowa("5+5");
-    	dr.setPodzialPrzedszkole("3+3");
-    	request.setAttribute("dayReport", dr);
-    	request.setAttribute("productlist", productsObjectSortedByName());
-    	request.setAttribute("mode", "MODE_FORM");
-        return "dayreport";
+    	request.setAttribute(Attributes.DAY_REPORT, DayReportUtils.generateDayReportWithTestData());
+    	request.setAttribute(Attributes.PRODUCT_LIST, productsObjectSortedByName());
+    	request.setAttribute(Modes.MODE, Modes.MODE_FORM);
+        return JspFileNames.DAYREPORT;
     }
     
     //dodanie raportu dziennego
@@ -254,10 +248,10 @@ public class MainController {
 	        dayReportService.save(dayReportEntity);
         	
         }
-        request.setAttribute(ATTRIBUTE_MESSAGE, generateDayReport.getMessage());
-        request.setAttribute("message2", generateDayReport.getMessage2());
-        request.setAttribute("mode", "MODE_MESSAGE");
-        return "dayreport";
+        request.setAttribute(Attributes.MESSAGE, generateDayReport.getMessage());
+        request.setAttribute(Attributes.MESSAGE2, generateDayReport.getMessage2());
+        request.setAttribute(Modes.MODE, Modes.MODE_MESSAGE);
+        return JspFileNames.DAYREPORT;
     }
     
     @PostMapping("/save-card")
@@ -285,138 +279,138 @@ public class MainController {
 	    		throw new Exception("Nie ma takiej karty materiałowej.");
 	    	}
     	}
-    	request.setAttribute(ATTRIBUTE_MESSAGE, generateCard.getMessage());
-    	request.setAttribute("mode", "MODE_MESSAGE");
-        return "cards";
+    	request.setAttribute(Attributes.MESSAGE, generateCard.getMessage());
+    	request.setAttribute(Modes.MODE, Modes.MODE_MESSAGE);
+        return JspFileNames.CARDS;
     }
 
     @GetMapping("/cards")
     public String viewCards(HttpServletRequest request){
-        request.setAttribute("mode", "MODE_FORM");
-        return "cards";
+        request.setAttribute(Modes.MODE, Modes.MODE_FORM);
+        return JspFileNames.CARDS;
     }
 
     //przegląd konsumentów
     @GetMapping("/viewconsumers")
     public String viewStudents(HttpServletRequest request){
-        request.setAttribute("consumers", consumersObjectSortedBySurname());
-        request.setAttribute("mode", "MODE_CONSUMERS");
-        return "viewconsumers";
+        request.setAttribute(Attributes.CONSUMERS, consumersObjectSortedBySurname());
+        request.setAttribute(Modes.MODE, Modes.MODE_CONSUMERS);
+        return JspFileNames.VIEWCONSUMERS;
     }
     
     //wyświetlenie formularza edycji konsumenta
     @GetMapping("/update-consumer")
     public String updateConsumer(@RequestParam Integer id, HttpServletRequest request){
-        request.setAttribute("consumer", consumerService.findConsumer(id));
-        request.setAttribute("mode", "MODE_UPDATE");
-        return "viewconsumers";
+        request.setAttribute(Attributes.CONSUMER, consumerService.findConsumer(id));
+        request.setAttribute(Modes.MODE, Modes.MODE_UPDATE);
+        return JspFileNames.VIEWCONSUMERS;
     }
     
     //dodanie nowego konsumenta do bazy
     @GetMapping("/add-consumer")
     public String addConsumer(HttpServletRequest request){
-        request.setAttribute("mode", "MODE_ADD");
-        return "viewconsumers";
+        request.setAttribute(Modes.MODE, Modes.MODE_ADD);
+        return JspFileNames.VIEWCONSUMERS;
     }
     
     //zapis konsumenta do bazy danych
     @PostMapping("/save-consumer")
     public String saveConsumer(@ModelAttribute ConsumerEntity consumer, BindingResult bindingResult, HttpServletRequest request){
         consumerService.save(consumer);
-        request.setAttribute("consumers", consumersObjectSortedBySurname());
-        request.setAttribute("mode", "MODE_CONSUMERS");
-        return "viewconsumers";
+        request.setAttribute(Attributes.CONSUMERS, consumersObjectSortedBySurname());
+        request.setAttribute(Modes.MODE, Modes.MODE_CONSUMERS);
+        return JspFileNames.VIEWCONSUMERS;
     }
     
     //usunięcie konsumenta z bazy danych
     @GetMapping("/delete-consumer")
     public String deleteConsumer(@RequestParam Integer id, HttpServletRequest request){
         consumerService.delete(id);
-        request.setAttribute("consumers", consumersObjectSortedBySurname());
-        request.setAttribute("mode", "MODE_CONSUMERS");
-        return "viewconsumers";
+        request.setAttribute(Attributes.CONSUMERS, consumersObjectSortedBySurname());
+        request.setAttribute(Modes.MODE, Modes.MODE_CONSUMERS);
+        return JspFileNames.VIEWCONSUMERS;
     }
 
     //przegląd produktów
     @GetMapping("/viewproducts")
     public String viewProducts(HttpServletRequest request) {
-        request.setAttribute("products", productsObjectSortedByName());
-        request.setAttribute("mode", "MODE_PRODUCTS");
-        return "products";
+        request.setAttribute(Attributes.PRODUCTS, productsObjectSortedByName());
+        request.setAttribute(Modes.MODE, Modes.MODE_PRODUCTS);
+        return JspFileNames.PRODUCTS;
     }
     
     //wyświetlenie formularza edycji produktu
     @GetMapping("/update-product")
     public String updateProduct(@RequestParam String number, HttpServletRequest request){
-        request.setAttribute("product", productService.findProduct(number));
-        request.setAttribute("mode", "MODE_UPDATE");
-        return "products";
+        request.setAttribute(Attributes.PRODUCT, productService.findProduct(number));
+        request.setAttribute(Modes.MODE, Modes.MODE_UPDATE);
+        return JspFileNames.PRODUCTS;
     }
     
     //dodanie nowego produktu do bazy
     @GetMapping("/add-product")
     public String addProduct(HttpServletRequest request){
-        request.setAttribute("mode", "MODE_ADD");
-        return "products";
+        request.setAttribute(Modes.MODE, Modes.MODE_ADD);
+        return JspFileNames.PRODUCTS;
     }
     
     //zapis produktu do bazy danych
     @PostMapping("/save-product")
     public String saveProduct(@ModelAttribute ProductEntity productEntity, BindingResult bindingResult, HttpServletRequest request){
-        if(request.getParameter("addorupdate").equals("1")) {
+        if(request.getParameter(Attributes.ADD_OR_UPDATE).equals(ADD_PRODUCT_PARAM)) {
             List<ProductEntity> productEntityList = new ArrayList<>(productService.findAll());
             for (ProductEntity p : productEntityList) {
                 if (p.getNumber().equals(productEntity.getNumber())) {
-                    request.setAttribute("mode", "MODE_WRONG_NUMBER");
-                    return "products";
+                    request.setAttribute(Modes.MODE, Modes.MODE_WRONG_NUMBER);
+                    return JspFileNames.PRODUCTS;
                 }
             }
         }
         productService.save(productEntity);
-        request.setAttribute("products", productsObjectSortedByName());
-        request.setAttribute("mode", "MODE_PRODUCTS");
-        return "products";
+        request.setAttribute(Attributes.PRODUCTS, productsObjectSortedByName());
+        request.setAttribute(Modes.MODE, Modes.MODE_PRODUCTS);
+        return JspFileNames.PRODUCTS;
     }
     
     //usunięcie produktu z bazy danych
     @GetMapping("/delete-product")
     public String deleteProduct(@RequestParam String number, HttpServletRequest request){
         productService.delete(number);
-        request.setAttribute("products", productsObjectSortedByName());
-        request.setAttribute("mode", "MODE_PRODUCTS");
-        return "products";
+        request.setAttribute(Attributes.PRODUCTS, productsObjectSortedByName());
+        request.setAttribute(Modes.MODE, Modes.MODE_PRODUCTS);
+        return JspFileNames.PRODUCTS;
     }
 
     @GetMapping("/viewreports")
     public String viewReports(HttpServletRequest request){
-        File reportsFolder = new File("src/main/webapp/static/reports");
-        File monthReportsFolder = new File("src/main/webapp/static/monthreports");
+        File reportsFolder = new File(REPORTS_FOLDER_PATH);
+        File monthReportsFolder = new File(MONTH_REPORTS_FOLDER_PATH);
         File[] listOfReportsFiles = reportsFolder.listFiles();
         File[] listOfMonthReportsFiles = monthReportsFolder.listFiles();
-        request.setAttribute("files", listOfReportsFiles);
-        request.setAttribute("monthfiles", listOfMonthReportsFiles);
-        return "viewreports";
+        request.setAttribute(Attributes.FILES, listOfReportsFiles);
+        request.setAttribute(Attributes.MONTH_FILES, listOfMonthReportsFiles);
+        return JspFileNames.VIEWREPORTS;
     }
     
     @GetMapping("/viewsales")
     public String viewSales(HttpServletRequest request){
-        File salesFolder = new File("src/main/webapp/static/sales");
+        File salesFolder = new File(SALES_FOLDER_PATH);
         File[] listOfSalesFiles = salesFolder.listFiles();
-        request.setAttribute("files", listOfSalesFiles);
-        return "viewsales";
+        request.setAttribute(Attributes.FILES, listOfSalesFiles);
+        return JspFileNames.VIEWSALES;
     }
     
     @GetMapping("/viewmenus")
     public String viewMenus(HttpServletRequest request){
-        File salesFolder = new File("src/main/webapp/static/menus");
-        File[] listOfSalesFiles = salesFolder.listFiles();
-        request.setAttribute("files", listOfSalesFiles);
-        return "viewmenus";
+        File menusFolder = new File(MENUS_FOLDER_PATH);
+        File[] listOfMenusFiles = menusFolder.listFiles();
+        request.setAttribute(Attributes.FILES, listOfMenusFiles);
+        return JspFileNames.VIEWMENUS;
     }
 
     @GetMapping("/getDayReport")
     public void getDayReport(@RequestParam String fileName, HttpServletRequest request, HttpServletResponse response){
-        Path path = Paths.get("src/main/webapp/static/reports", fileName);
+        Path path = Paths.get(REPORTS_FOLDER_PATH, fileName);
         try{
             response.setContentType("xlsx");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName +"\"");
@@ -424,12 +418,11 @@ public class MainController {
         }catch (IOException e){
             e.printStackTrace();
         }
-
     }
     
     @GetMapping("/getMonthReport")
     public void getMonthReport(@RequestParam String fileName, HttpServletRequest request, HttpServletResponse response){
-        Path path = Paths.get("src/main/webapp/static/monthreports", fileName);
+        Path path = Paths.get(MONTH_REPORTS_FOLDER_PATH, fileName);
         try{
             response.setContentType("xlsx");
             response.setHeader("Content-Disposition","attachment; filename=\"" + fileName +"\"");
@@ -437,12 +430,11 @@ public class MainController {
         }catch (IOException e){
             e.printStackTrace();
         }
-
     }
     
     @GetMapping("/getSaleReport")
     public void getSaleReport(@RequestParam String fileName, HttpServletRequest request, HttpServletResponse response){
-        Path path = Paths.get("src/main/webapp/static/sales", fileName);
+        Path path = Paths.get(SALES_FOLDER_PATH, fileName);
         try{
             response.setContentType("xlsx");
             response.setHeader("Content-Disposition","attachment; filename=\"" + fileName +"\"");
@@ -450,12 +442,11 @@ public class MainController {
         }catch (IOException e){
             e.printStackTrace();
         }
-
     }
     
     @GetMapping("/getMenu")
     public void getSMenu(@RequestParam String fileName, HttpServletRequest request, HttpServletResponse response){
-        Path path = Paths.get("src/main/webapp/static/menus", fileName);
+        Path path = Paths.get(MENUS_FOLDER_PATH, fileName);
         try{
             response.setContentType("xlsx");
             response.setHeader("Content-Disposition","attachment; filename=\"" + fileName +"\"");
@@ -463,38 +454,27 @@ public class MainController {
         }catch (IOException e){
             e.printStackTrace();
         }
-
     }
 
     public List<String> productsNameSortByName(){
         List<ProductEntity> productEntityList = new ArrayList<>(productService.findAll());
-        List<String> products = new ArrayList<>();
+        List<String> productNames = new ArrayList<>();
         for(ProductEntity p : productEntityList){
-            products.add(p.getName());
+            productNames.add(p.getName());
         }
-        products.sort((String o1, String o2) -> o1.compareTo(o2));	//TODO przetestować lambdę
-        return products;
+        productNames.sort((String o1, String o2) -> o1.compareTo(o2));	
+        return productNames;
     }
 
     public List<ProductEntity> productsObjectSortedByName(){
         List<ProductEntity> productEntityList = new ArrayList<>(productService.findAll());
-        Collections.sort(productEntityList, new Comparator<ProductEntity>() {	//TODO Lambda z comapratora
-            @Override
-            public int compare(ProductEntity o1, ProductEntity o2) {
-                return o1.getName().compareTo(o2.getName());
-            }
-        });
+        productEntityList.sort((ProductEntity o1, ProductEntity o2) -> o1.getName().compareTo(o2.getName()));
         return productEntityList;
     }
 
     public List<ConsumerEntity> consumersObjectSortedBySurname(){
         List<ConsumerEntity> consumerEntityList = new ArrayList<>(consumerService.findAll());
-        Collections.sort(consumerEntityList, new Comparator<ConsumerEntity>() {	//TODO Lambda z comapratora
-            @Override
-            public int compare(ConsumerEntity o1, ConsumerEntity o2) {
-                return o1.getSurname().compareTo(o2.getSurname());
-            }
-        });
+        consumerEntityList.sort((ConsumerEntity o1, ConsumerEntity o2) -> o1.getSurname().compareTo(o2.getSurname()));
         return consumerEntityList;
     }
 }

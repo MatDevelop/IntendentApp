@@ -55,7 +55,7 @@
                 </div>
             </c:when>
 
-            <c:when test="${mode == 'MODE_FORMS'}">
+            <c:when test="${mode == 'MODE_FORM'}">
                 <div class="container">
                     <div class="row text-center">
                         <div class="col-lg-2 col-lg-offset-10">
