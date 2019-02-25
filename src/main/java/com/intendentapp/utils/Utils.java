@@ -18,7 +18,7 @@ public class Utils {
 	private Utils() {}
 	
 	public static List<String> splitAndReturnList(String s){
-		return new LinkedList<>(Arrays.asList(s.split(",")));
+		return new LinkedList<>(Arrays.asList(s.split(",", -1)));	//-1, żeby pobierał również puste znaki
 	}
 	
 	public static boolean isEmptyRow(String przychodPurchaseDates, String rozchodDatesOut) {
