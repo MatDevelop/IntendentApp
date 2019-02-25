@@ -20,6 +20,8 @@ public class Card {
 	private String rozchodRemainedValues;
 	private String rozchodReportNumbers;
 	
+	public Card() {}
+	
 	public Card(Integer cardId, String name, String number, String shopName, String unit, String rowNumbers,
 			String przychodPurchaseDates, String przychodUnitprices, String przychodAmounts, String przychodValues,
 			String rozchodDatesOut, String rozchodUnitprices, String rozchodAmounts, String rozchodValues,
