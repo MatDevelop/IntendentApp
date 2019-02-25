@@ -79,10 +79,8 @@ public class InsertToSaleExcelReport {
     }
 
     public void insertLp(){
-        int i = 1;
-        for(String name : names){	//TODO zrobić fora
+        for(int i=1; i<=names.size(); i++) {
             openXlsx.updateIntegerCell(i,0,i);
-            i++;
         }
     }
 
