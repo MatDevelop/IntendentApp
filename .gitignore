@@ -3,6 +3,7 @@
 /logs/
 src/main/webapp/static/monthreports/
 src/main/webapp/static/reports/
+src/main/webapp/static/cards/
 SecurityConfiguration.java
 .settings/
 .idea/

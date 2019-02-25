@@ -282,7 +282,7 @@ public class MainController {
 	    	}else {
 	    		NoFindCardException nfce = new NoFindCardException("Nie ma takiej karty materiałowej.");
 	    		log.error(nfce);
-	    		throw nfce;	//TODO Sprawdzić czy przerywa program czy nie
+	    		throw nfce;
 	    	}
     	}
     	request.setAttribute(Attributes.MESSAGE, generateCard.getMessage());

@@ -32,7 +32,7 @@ public class InsertToCardExcelReport {
 	public InsertToCardExcelReport(Card card, String filename) {
 		//TODO ustawic początkowy wiersz startRowNumber = ;
 		//TODO nazwa numer + nazwa karty, przy tworzeniu nowej karty dopisywac do pliku #ARCHIVED i datę i do nazwy w bazie tez archived i datę
-		openXlsx = new OpenXlsx(filename, "src/main/webapp/static/cards/" + card.getNumber()+card.getName()+".xlsx");     //utworzenie obiektu pliku excelowego	//TODO utwrzyc folder cards
+		openXlsx = new OpenXlsx(filename, "src/main/webapp/static/cards/" + card.getNumber()+card.getName()+".xlsx");     //utworzenie obiektu pliku excelowego
         name = card.getName();
         number = card.getNumber();
         shopName = card.getShopName();
