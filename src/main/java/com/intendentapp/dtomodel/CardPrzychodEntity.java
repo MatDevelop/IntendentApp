@@ -25,7 +25,7 @@ public class CardPrzychodEntity implements Serializable {
 	@Column(name = "value")
 	private Double value;
 	
-	@Column(name = "row_number")
+	@Column(name = "`row_number`")
 	private Integer rowNumber;
 	
 	@Column(name = "id_card_document")

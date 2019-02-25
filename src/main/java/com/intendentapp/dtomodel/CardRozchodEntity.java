@@ -34,7 +34,7 @@ public class CardRozchodEntity implements Serializable {
 	@Column(name = "remained_value")
 	private Double remainedValue;
 	
-	@Column(name = "row_number")
+	@Column(name = "`row_number`")
 	private Integer rowNumber;
 	
 	@Column(name = "id_card_document")
