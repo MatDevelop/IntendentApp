@@ -297,20 +297,22 @@ public class MainController {
     	if(generateCard.getMessage() != 0) {
 	    	CardEntity cardEntity = cardService.findCard(card.getCardId());
 	    	if(cardEntity != null) {
+	    		CardEntity newCardEntity = new CardEntity();
+	    		newCardEntity.setIdCardDocument(card.getCardId());
 	    		List<CardPrzychodEntity> cardPrzychodEntityList = cardEntity.getCardPrzychodList();
 	    		List<CardRozchodEntity> cardRozchodEntityList = cardEntity.getCardRozchodList();
-	    		if(!cardPrzychodEntityList.isEmpty() && cardPrzychodEntityList != null) {
+	    		if(!cardPrzychodEntityList.isEmpty()) {
 		    		for(CardPrzychodEntity cpe : cardPrzychodEntityList) {
 		    			cardPrzychodService.delete(cpe.getIdCardPrzychod());
 		    		}
 	    		}
-	    		if(!cardRozchodEntityList.isEmpty() && cardRozchodEntityList != null) {
+	    		if(!cardRozchodEntityList.isEmpty()) {
 		    		for(CardRozchodEntity cre : cardRozchodEntityList) {
 		    			cardRozchodService.delete(cre.getIdCardRozchod());
 		    		}
 	    		}
-	    		cardEntity = CardConverter.convert(card, cardEntity, generateCard);
-		    	cardService.save(cardEntity);
+	    		newCardEntity = CardConverter.convert(card, newCardEntity, generateCard);
+		    	cardService.save(newCardEntity);
 	    	}else {
 	    		NoFindCardException nfce = new NoFindCardException("Nie ma takiej karty materiałowej.");
 	    		log.error(nfce);
