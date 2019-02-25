@@ -1,6 +1,5 @@
 package com.intendentapp.controller;
 
-import com.intendentapp.MainTest;
 import com.intendentapp.converter.CardConverter;
 import com.intendentapp.converter.DayReportConverter;
 import com.intendentapp.dbservices.CardPrzychodService;
@@ -27,6 +26,7 @@ import com.intendentapp.staticclasses.Attributes;
 import com.intendentapp.staticclasses.FilePaths;
 import com.intendentapp.staticclasses.JspFileNames;
 import com.intendentapp.staticclasses.Modes;
+import com.intendentapp.testutils.CardTestUtils;
 import com.intendentapp.testutils.DayReportTestUtils;
 import com.intendentapp.utils.DayReportUtils;
 
@@ -90,8 +90,42 @@ public class MainController {
     	//System.out.println("Next");
     }
     
+    @GetMapping("/card-test")
+    public void testCardSave(HttpServletRequest request) throws NoFindCardException{
+    	Card cardTestModel = CardTestUtils.createTestCardModel();
+    	CardEntity cardEntity2 = new CardEntity();
+    	cardTestModel.setCardId(84);
+    	GenerateCard generateCard = new GenerateCard(cardTestModel);
+    	
+    	CardEntity cardEntity = cardService.findCard(cardTestModel.getCardId());
+    	cardEntity2.setIdCardDocument(cardTestModel.getCardId());
+    	if(cardEntity != null) {
+    		List<CardPrzychodEntity> cardPrzychodEntityList = cardEntity.getCardPrzychodList();
+    		List<CardRozchodEntity> cardRozchodEntityList = cardEntity.getCardRozchodList();
+    		if(!cardPrzychodEntityList.isEmpty() && cardPrzychodEntityList != null) {
+	    		for(CardPrzychodEntity cpe : cardPrzychodEntityList) {
+	    			cardPrzychodService.delete(cpe.getIdCardPrzychod());
+	    		}
+    		}
+    		if(!cardRozchodEntityList.isEmpty() && cardRozchodEntityList != null) {
+	    		for(CardRozchodEntity cre : cardRozchodEntityList) {
+	    			cardRozchodService.delete(cre.getIdCardRozchod());
+	    		}
+    		}
+    		cardEntity2 = CardConverter.convert(cardTestModel, cardEntity2, generateCard);
+	    	cardService.save(cardEntity2);
+    	}else {
+    		NoFindCardException nfce = new NoFindCardException("Nie ma takiej karty materiałowej.");
+    		log.error(nfce);
+    		throw nfce;
+    	}
+    	
+    	/*cardEntity = CardConverter.convert(cardTestModel, cardEntity, generateCard);
+    	cardService.save(cardEntity);*/
+    }
+    
     @GetMapping("/dayreport-test-method")
-    public String dayReportTestMethod(HttpServletRequest request){
+    public void testDayReportGenerateAndSave(HttpServletRequest request){
     	DayReport dayReportTest = DayReportTestUtils.createTestDayReport();
 
     	GenerateDayReport generateDayReport = new GenerateDayReport(dayReportTest);
@@ -125,8 +159,6 @@ public class MainController {
 	        dayReportService.save(dayReportEntity);
         	
         }
-
-    	return "Poszlo";
     }
     
     @GetMapping("/")
@@ -218,7 +250,7 @@ public class MainController {
     //dodanie raportu dziennego
     @PostMapping("/adddayreport")
     public String addDayReport(@ModelAttribute DayReport dayReport, BindingResult bindingResult, HttpServletRequest request){
-    	GenerateDayReport generateDayReport = new GenerateDayReport(dayReport);
+    	GenerateDayReport generateDayReport = new GenerateDayReport(dayReport);	//TODO przetestować czy kwoty idą z kropką czy z przecinkiem
         List<ProductEntity> productEntityList = new ArrayList<>();
         
         for(String product : generateDayReport.getInsert().getProducts()){
