@@ -83,8 +83,15 @@ public class MainController {
     
     private final String ADD_PRODUCT_PARAM = "1";
     
-    @GetMapping("/test-method")
-    public String testMethod(HttpServletRequest request){
+    @GetMapping("/test")
+    public void test(HttpServletRequest request) throws NoFindCardException{
+    	System.out.println("Start...");
+    	throw new NoFindCardException("NoFindException");
+    	//System.out.println("Next");
+    }
+    
+    @GetMapping("/dayreport-test-method")
+    public String dayReportTestMethod(HttpServletRequest request){
     	DayReport dayReportTest = DayReportTestUtils.createTestDayReport();
 
     	GenerateDayReport generateDayReport = new GenerateDayReport(dayReportTest);
@@ -252,7 +259,7 @@ public class MainController {
     }
     
     @PostMapping("/save-card")
-    public String saveCard(@ModelAttribute Card card, BindingResult bindingResult, HttpServletRequest request){
+    public String saveCard(@ModelAttribute Card card, BindingResult bindingResult, HttpServletRequest request) throws NoFindCardException{
     	GenerateCard generateCard = new GenerateCard(card);
     	generateCard.generate();
     	if(generateCard.getMessage() != 0) {

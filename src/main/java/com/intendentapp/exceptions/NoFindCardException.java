@@ -1,6 +1,6 @@
 package com.intendentapp.exceptions;
 
-public class NoFindCardException extends RuntimeException {
+public class NoFindCardException extends Throwable {
 	
 	public NoFindCardException() {}
 	
