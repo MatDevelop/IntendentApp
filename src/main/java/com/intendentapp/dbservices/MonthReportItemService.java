@@ -35,4 +35,8 @@ public class MonthReportItemService {
 	public List<MonthReportItemEntity> findByReportDate(Date date) {
 		return monthReportItemRepository.findByReportDate(date);
 	}
+	
+	public void delete(Integer id) {
+		monthReportItemRepository.delete(id);
+	}
 }
