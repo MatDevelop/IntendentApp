@@ -47,6 +47,7 @@ public class InsertToMonthExcelReport {
             if(!openXlsx.readOneCell(i, 1).isEmpty()){
                 if(openXlsx.readOneCell(i, 1).equals(insertDayReport.getDate())){
                     insertMonthRepCells(i);
+                    log.info("Utworzono/zmodyfikowano poprawnie raport miesięczny.");
                     return 1; //wszystko ok
                 }
             }else{
