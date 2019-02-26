@@ -47,15 +47,16 @@ public class InsertToMonthExcelReport {
             if(!openXlsx.readOneCell(i, 1).isEmpty()){
                 if(openXlsx.readOneCell(i, 1).equals(insertDayReport.getDate())){
                     insertMonthRepCells(i);
-                    log.info("Utworzono/zmodyfikowano poprawnie raport miesięczny.");
+                    log.info("Zmodyfikowano poprawnie raport dzienny w raporcie miesięcznym.");
                     return 1; //wszystko ok
                 }
             }else{
                 insertMonthRepCells(i);
+                log.info("Dodano poprawnie raport dzienny do raportu miesięcznego.");
                 return 1;
             }
             if(i == 32){
-            	log.error("Przeroczono liczbę wierszy dostępnych w raporcie miesięcznym");
+            	log.error("Przekroczono liczbę wierszy dostępnych w raporcie miesięcznym");
                 return 3;   //za mało wierszy w raporcie miesięcznym    
             }
         }   
