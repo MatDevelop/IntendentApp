@@ -3,11 +3,10 @@ package com.intendentapp.dtomodel;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.*;
 
-@Entity(name="day_report_document")
+@Entity(name = "day_report_document")
 public class DayReportEntity implements Serializable {
 	
 	@Id
