@@ -15,6 +15,7 @@ import com.intendentapp.dtomodel.CardRozchodEntity;
 import com.intendentapp.dtomodel.ConsumerEntity;
 import com.intendentapp.dtomodel.DayReportEntity;
 import com.intendentapp.dtomodel.DayReportItemEntity;
+import com.intendentapp.dtomodel.MonthReportItemEntity;
 import com.intendentapp.dtomodel.ProductEntity;
 import com.intendentapp.exceptions.NoFindCardException;
 import com.intendentapp.generator.GenerateCard;
@@ -282,6 +283,7 @@ public class MainController {
 	        }
 	        dayReportService.save(dayReportEntity);
         	
+	        MonthReportItemEntity monthReportItemEntity = 
         }
         
         request.setAttribute(Attributes.MESSAGE, generateDayReport.getMessage());

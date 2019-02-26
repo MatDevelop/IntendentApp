@@ -34,8 +34,5 @@ public class DayReportService {
 	
 	public List<DayReportEntity> findByDate(Date date){
 		return dayReportRespository.findByDate(date);
-	}
-	
-	
-	
+	}	
 }
