@@ -2,12 +2,15 @@ package com.intendentapp.controller;
 
 import com.intendentapp.converter.CardConverter;
 import com.intendentapp.converter.DayReportConverter;
+import com.intendentapp.converter.MonthReportConverter;
 import com.intendentapp.dbservices.CardPrzychodService;
 import com.intendentapp.dbservices.CardRozchodService;
 import com.intendentapp.dbservices.CardService;
 import com.intendentapp.dbservices.ConsumerService;
 import com.intendentapp.dbservices.DayReportItemService;
 import com.intendentapp.dbservices.DayReportService;
+import com.intendentapp.dbservices.MonthReportItemService;
+import com.intendentapp.dbservices.MonthReportService;
 import com.intendentapp.dbservices.ProductService;
 import com.intendentapp.dtomodel.CardEntity;
 import com.intendentapp.dtomodel.CardPrzychodEntity;
@@ -15,6 +18,7 @@ import com.intendentapp.dtomodel.CardRozchodEntity;
 import com.intendentapp.dtomodel.ConsumerEntity;
 import com.intendentapp.dtomodel.DayReportEntity;
 import com.intendentapp.dtomodel.DayReportItemEntity;
+import com.intendentapp.dtomodel.MonthReportEntity;
 import com.intendentapp.dtomodel.MonthReportItemEntity;
 import com.intendentapp.dtomodel.ProductEntity;
 import com.intendentapp.exceptions.NoFindCardException;
@@ -81,6 +85,12 @@ public class MainController {
     
     @Autowired
     CardPrzychodService cardPrzychodService;
+    
+    @Autowired
+    MonthReportService monthReportService;
+    
+    @Autowired
+    MonthReportItemService monthReportItemService;
     
     private final String ADD_PRODUCT_PARAM = "1";
     
@@ -270,6 +280,7 @@ public class MainController {
 	        }	      
 	        dayReport.setDayReportValue(Double.parseDouble(df.format(generateDayReport.getInsert().getReportCost()).replace(",",".")));
         	dayReport.setDayReportAvg(Double.parseDouble(df.format(generateDayReport.getInsert().getAvgCost()).replace(",","."))); 
+        	//-----------------------------------------zapis raportu dziennego do bazy-------------------------------------------------
         	List<DayReportEntity> dayReportEntityList = dayReportService.findByDate(generateDayReport.getInsert().getDateFromString());
         	DayReportEntity dayReportEntity = new DayReportEntity();
 	        if(!dayReportEntityList.isEmpty()) {
@@ -282,8 +293,20 @@ public class MainController {
 	        	dayReportEntity = DayReportConverter.convert(dayReport, dayReportEntity, generateDayReport);      	
 	        }
 	        dayReportService.save(dayReportEntity);
-        	
-	        MonthReportItemEntity monthReportItemEntity = 
+        	//------------------------------------------zapis raportu miesięcznego do bazy---------------------------------------------
+	        MonthReportEntity monthReportEntityDto = 
+	        		monthReportService.findByForMonth(generateDayReport.getGenerateMonthReport().getMonth() + generateDayReport.getGenerateMonthReport().getYear());
+	        MonthReportEntity monthReportEntity = new MonthReportEntity();
+	        MonthReportConverter monthReportConverter = new MonthReportConverter();
+	        if(monthReportEntityDto != null) {
+	        	monthReportEntity.setIdMonthReport(monthReportEntityDto.getIdMonthReport());
+	        	MonthReportItemEntity monthReportItemEntity = monthReportItemService.findByReportDate(dayReportEntity.getDate());
+	        	monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
+	        			monthReportEntityDto.getMonthReportItems(), monthReportItemEntity);
+	        }else {
+	        	monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
+	        			monthReportEntityDto.getMonthReportItems(), null);
+	        }
         }
         
         request.setAttribute(Attributes.MESSAGE, generateDayReport.getMessage());
