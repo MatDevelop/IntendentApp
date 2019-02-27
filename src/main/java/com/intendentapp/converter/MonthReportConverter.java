@@ -64,13 +64,14 @@ public class MonthReportConverter {
 		monthReportItemEntityList.add(newMonthReportItemEntity);
 		
 		//sumujemy wartości z wszystkich raportów
+		//TODO usunąć wszystkie pozycje z bazy i zapisać ponownie. Utworzyć nową listę i do niej wrzucić starą listę bez id-ków
 		for(MonthReportItemEntity mrie : monthReportItemEntityList) {
-			
 			studentsSum += mrie.getStudents();
 			otherPersonsSum += mrie.getOtherPersons();
 			sumPersons += mrie.getSumPersons();
 			monthReportQuota += mrie.getReportQuota();
 		}
+		
 		studentsPayment = studentsSum * QUOTA_PER_DINNER;
 		otherPaymentForDinner = otherPersonsSum * QUOTA_PER_DINNER;
 		otherPaymentForCosts = otherPersonsSum * OTHERS_COST_PER_DINNER;
@@ -80,17 +81,17 @@ public class MonthReportConverter {
 		remainedValue = (avgMonthReportQuota - QUOTA_PER_DINNER) * sumPersons;
 		
 		monthReportEntity.setForMonth(generateMonthReport.getMonth() + generateMonthReport.getYear());
-		monthReportEntity.setMonthReportQuota(monthReportQuota);
-		monthReportEntity.setOtherPaymentForCosts(otherPaymentForCosts);
-		monthReportEntity.setOtherPaymentForDinner(otherPaymentForDinner);
+		monthReportEntity.setMonthReportQuota(Double.parseDouble(df.format(monthReportQuota).replace(",",".")));
+		monthReportEntity.setOtherPaymentForCosts(Double.parseDouble(df.format(otherPaymentForCosts).replace(",",".")));
+		monthReportEntity.setOtherPaymentForDinner(Double.parseDouble(df.format(otherPaymentForDinner).replace(",",".")));
 		monthReportEntity.setOtherPersonsSum(otherPersonsSum);
-		monthReportEntity.setRetirement(retirement);
-		monthReportEntity.setStudentsPayment(studentsPayment);
+		monthReportEntity.setRetirement(Double.parseDouble(df.format(retirement).replace(",",".")));
+		monthReportEntity.setStudentsPayment(Double.parseDouble(df.format(studentsPayment).replace(",",".")));
 		monthReportEntity.setStudentsSum(studentsSum);
-		monthReportEntity.setSumPayments(sumPayments);
-		monthReportEntity.setAvgMonthReportQuota(avgMonthReportQuota);
+		monthReportEntity.setSumPayments(Double.parseDouble(df.format(sumPayments).replace(",",".")));
+		monthReportEntity.setAvgMonthReportQuota(Double.parseDouble(df.format(avgMonthReportQuota).replace(",",".")));
 		monthReportEntity.setMonthReportItems(monthReportItemEntityList);
-		monthReportEntity.setRemainedValue(remainedValue);
+		monthReportEntity.setRemainedValue(Double.parseDouble(df.format(remainedValue).replace(",",".")));
 		
 		return monthReportEntity;
 	}
