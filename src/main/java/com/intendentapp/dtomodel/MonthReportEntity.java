@@ -45,6 +45,9 @@ public class MonthReportEntity implements Serializable{
 	
 	@Column(name = "retirement")
 	private Double retirement;
+
+	@Column(name = "remained_value")
+	private Double remainedValue;
 	
 	@OneToMany(cascade = CascadeType.ALL,
 	        orphanRemoval = true)
@@ -56,7 +59,7 @@ public class MonthReportEntity implements Serializable{
 	public MonthReportEntity(Integer idMonthReport, String forMonth, Double monthReportQuota, Integer studentsSum,
 			Integer otherPersonsSum, Integer sumPersons, Double avgMonthReportQuota, Double studentsPayment,
 			Double otherPaymentForDinner, Double otherPaymentForCosts, Double sumPayments, Double retirement,
-			List<MonthReportItemEntity> monthReportItems) {
+			Double remainedValue, List<MonthReportItemEntity> monthReportItems) {
 		super();
 		this.idMonthReport = idMonthReport;
 		this.forMonth = forMonth;
@@ -70,6 +73,7 @@ public class MonthReportEntity implements Serializable{
 		this.otherPaymentForCosts = otherPaymentForCosts;
 		this.sumPayments = sumPayments;
 		this.retirement = retirement;
+		this.remainedValue = remainedValue;
 		this.monthReportItems = monthReportItems;
 	}
 
@@ -167,6 +171,14 @@ public class MonthReportEntity implements Serializable{
 
 	public void setRetirement(Double retirement) {
 		this.retirement = retirement;
+	}
+
+	public Double getRemainedValue() {
+		return remainedValue;
+	}
+
+	public void setRemainedValue(Double remainedValue) {
+		this.remainedValue = remainedValue;
 	}
 
 	public List<MonthReportItemEntity> getMonthReportItems() {

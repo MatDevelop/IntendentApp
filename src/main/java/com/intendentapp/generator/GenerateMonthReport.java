@@ -66,4 +66,8 @@ public class GenerateMonthReport {
     public Integer getMessage() {
         return message;
     }
+
+	public InsertToDayExcelReport getInsertDayReport() {
+		return insertDayReport;
+	}
 }
