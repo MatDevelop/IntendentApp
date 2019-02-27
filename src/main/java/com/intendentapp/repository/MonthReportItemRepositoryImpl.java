@@ -15,11 +15,11 @@ public class MonthReportItemRepositoryImpl implements MonthReportItemRepositoryC
 	EntityManager entityManager;
 	
 	@Override
-	public List<MonthReportItemEntity> findByReportDate(Date date) {
+	public MonthReportItemEntity findByReportDate(Date date) {
 		Query query = entityManager.createNamedQuery("SELECT * FROM intendentdb.month_report_item " +
 				"WHERE date = ?", MonthReportItemEntity.class);
 		query.setParameter(1, date);
-		return query.getResultList();
+		return (MonthReportItemEntity) query.getSingleResult();
 	}
 
 }

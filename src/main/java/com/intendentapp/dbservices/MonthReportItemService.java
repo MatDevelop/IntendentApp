@@ -32,7 +32,7 @@ public class MonthReportItemService {
 		monthReportItemRepository.save(monthReportItemEntity);
 	}
 	
-	public List<MonthReportItemEntity> findByReportDate(Date date) {
+	public MonthReportItemEntity findByReportDate(Date date) {
 		return monthReportItemRepository.findByReportDate(date);
 	}
 	

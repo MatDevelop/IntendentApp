@@ -6,5 +6,5 @@ import java.util.List;
 import com.intendentapp.dtomodel.MonthReportItemEntity;
 
 public interface MonthReportItemRepositoryCustom {
-	List<MonthReportItemEntity> findByReportDate(Date date);
+	MonthReportItemEntity findByReportDate(Date date);
 }
