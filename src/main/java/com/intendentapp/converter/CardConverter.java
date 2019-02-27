@@ -20,7 +20,7 @@ public class CardConverter {
 	
 	private CardConverter() {}
 	
-	public static CardEntity convert(Card card, CardEntity cardEntity, GenerateCard generateCard) {
+	public static CardEntity convert(Card card, CardEntity cardEntity, GenerateCard generateCard) {	//TODO zrobić wszystkie konwertery jako instancje
 		InsertToCardExcelReport insert = generateCard.getInsertToCard();
 		List<CardPrzychodEntity> cardPrzychodEntityList = new ArrayList<>();
 		List<CardRozchodEntity> cardRozchodEntityList = new ArrayList<>();

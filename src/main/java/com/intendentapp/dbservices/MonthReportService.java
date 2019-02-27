@@ -31,7 +31,7 @@ public class MonthReportService {
 		monthReportRepository.save(monthReportEntity);
 	}
 	
-	public MonthReportEntity findByForMonth(String forMonth) {
+	public List<MonthReportEntity> findByForMonth(String forMonth) {
 		return monthReportRepository.findByForMonth(forMonth);
 	}
 }

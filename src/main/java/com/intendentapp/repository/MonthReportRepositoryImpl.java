@@ -1,5 +1,7 @@
 package com.intendentapp.repository;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -17,10 +19,10 @@ public class MonthReportRepositoryImpl implements MonthReportRepositoryCustom{
 	EntityManager entityManager;
 	
 	@Override
-	public MonthReportEntity findByForMonth(String forMonth) {
+	public List<MonthReportEntity> findByForMonth(String forMonth) {
 		Query query = entityManager.createNativeQuery("SELECT * FROM intendentdb.month_report " +
 				"WHERE for_month = ?", MonthReportEntity.class);
 		query.setParameter(1, forMonth);
-		return (MonthReportEntity) query.getSingleResult();
+		return query.getResultList();
 	}
 }

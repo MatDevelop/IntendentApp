@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import com.intendentapp.dtomodel.MonthReportEntity;
 import com.intendentapp.dtomodel.MonthReportItemEntity;
 import com.intendentapp.repository.MonthReportItemRepository;
 
@@ -32,7 +33,7 @@ public class MonthReportItemService {
 		monthReportItemRepository.save(monthReportItemEntity);
 	}
 	
-	public MonthReportItemEntity findByReportDate(Date date) {
+	public List<MonthReportItemEntity> findByReportDate(Date date) {
 		return monthReportItemRepository.findByReportDate(date);
 	}
 	

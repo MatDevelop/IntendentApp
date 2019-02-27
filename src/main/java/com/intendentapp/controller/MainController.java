@@ -168,7 +168,22 @@ public class MainController {
 	        	dayReportEntity = DayReportConverter.convert(dayReportTest, dayReportEntity, generateDayReport);      	
 	        }
 	        dayReportService.save(dayReportEntity);
-        	
+	        
+	        List<MonthReportEntity> monthReportEntityDto = 
+	        		monthReportService.findByForMonth(generateDayReport.getGenerateMonthReport().getMonth() + generateDayReport.getGenerateMonthReport().getYear());
+	        MonthReportEntity monthReportEntity = new MonthReportEntity();
+	        MonthReportConverter monthReportConverter = new MonthReportConverter();
+	        if(!monthReportEntityDto.isEmpty()) {
+	        	monthReportEntity.setIdMonthReport(monthReportEntityDto.get(0).getIdMonthReport());
+	        	List<MonthReportItemEntity> monthReportItemEntity = monthReportItemService.findByReportDate(dayReportEntity.getDate());
+	        	monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
+	        			monthReportEntityDto.get(0).getMonthReportItems(), monthReportItemEntity.get(0));
+	        }else {
+	        	monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
+	        			new ArrayList<MonthReportItemEntity>(), null);
+	        }   	
+	        
+	        monthReportService.save(monthReportEntity);
         }
     }
     
@@ -294,19 +309,19 @@ public class MainController {
 	        }
 	        dayReportService.save(dayReportEntity);
         	//------------------------------------------zapis raportu miesięcznego do bazy---------------------------------------------
-	        MonthReportEntity monthReportEntityDto = 
+	        List<MonthReportEntity> monthReportEntityDto = 
 	        		monthReportService.findByForMonth(generateDayReport.getGenerateMonthReport().getMonth() + generateDayReport.getGenerateMonthReport().getYear());
 	        MonthReportEntity monthReportEntity = new MonthReportEntity();
 	        MonthReportConverter monthReportConverter = new MonthReportConverter();
-	        if(monthReportEntityDto != null) {
-	        	monthReportEntity.setIdMonthReport(monthReportEntityDto.getIdMonthReport());
-	        	MonthReportItemEntity monthReportItemEntity = monthReportItemService.findByReportDate(dayReportEntity.getDate());
+	        if(!monthReportEntityDto.isEmpty()) {
+	        	monthReportEntity.setIdMonthReport(monthReportEntityDto.get(0).getIdMonthReport());
+	        	List<MonthReportItemEntity> monthReportItemEntity = monthReportItemService.findByReportDate(dayReportEntity.getDate());
 	        	monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
-	        			monthReportEntityDto.getMonthReportItems(), monthReportItemEntity);
+	        			monthReportEntityDto.get(0).getMonthReportItems(), monthReportItemEntity.get(0));
 	        }else {
 	        	monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
-	        			monthReportEntityDto.getMonthReportItems(), null);
-	        }
+	        			new ArrayList<MonthReportItemEntity>(), null);
+	        }   	
         }
         
         request.setAttribute(Attributes.MESSAGE, generateDayReport.getMessage());
