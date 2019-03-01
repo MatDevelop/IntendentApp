@@ -22,9 +22,9 @@ public class DayReportTestUtils {
     	dayReport.setPodzialPrzedszkole("3+3");
     	dayReport.setPodzialZerowka("");
     	dayReport.setProduct("Cebula,...,...");
-    	dayReport.setAmount("2");
+    	dayReport.setAmount("3");
     	dayReport.setUnitprice("4.34");
-    	dayReport.setPositionValue("8.62");
+    	dayReport.setPositionValue("10.62");
     	dayReport.setNumber("1s");
     	return dayReport;
 	}

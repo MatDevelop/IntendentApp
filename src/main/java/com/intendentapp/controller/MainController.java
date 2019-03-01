@@ -178,9 +178,6 @@ public class MainController {
 	        	monthReportEntity.setIdMonthReport(monthReportEntityDto.get(0).getIdMonthReport());
 	        	List<MonthReportItemEntity> monthReportItemEntityList = monthReportEntityDto.get(0).getMonthReportItems();
 	        	List<MonthReportItemEntity> monthReportItemEntity = monthReportItemService.findByReportDate(dayReportEntity.getDate());
-	        	for(MonthReportItemEntity mrie : monthReportItemEntityList) {
-	        		monthReportItemService.delete(mrie.getIdMonthReportItem());
-	        	}
 	        	if(monthReportItemEntity.isEmpty()) {
 	        		monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
 	        				monthReportItemEntityList, null);
@@ -328,9 +325,6 @@ public class MainController {
 	        	monthReportEntity.setIdMonthReport(monthReportEntityDto.get(0).getIdMonthReport());
 	        	List<MonthReportItemEntity> monthReportItemEntityList = monthReportEntityDto.get(0).getMonthReportItems();
 	        	List<MonthReportItemEntity> monthReportItemEntity = monthReportItemService.findByReportDate(dayReportEntity.getDate());
-	        	for(MonthReportItemEntity mrie : monthReportItemEntityList) {
-	        		monthReportItemService.delete(mrie.getIdMonthReportItem());
-	        	}
 	        	if(monthReportItemEntity.isEmpty()) {
 	        		monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
 	        				monthReportItemEntityList, null);

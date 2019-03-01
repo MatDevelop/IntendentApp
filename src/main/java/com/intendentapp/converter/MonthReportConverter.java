@@ -68,26 +68,11 @@ public class MonthReportConverter {
 		newMonthReportItemEntityList.add(newMonthReportItemEntity);
 		
 		//sumujemy wartości z wszystkich raportów
-		//TODO nie działa, trzeba to zrobić od nowa
 		for(MonthReportItemEntity mrie : monthReportItemEntityList) {
 			studentsSum += mrie.getStudents();
 			otherPersonsSum += mrie.getOtherPersons();
 			sumPersons += mrie.getSumPersons();
 			monthReportQuota += mrie.getReportQuota();
-			
-			if(mrie.getDate().equals(newMonthReportItemEntity.getDate())) {
-				continue;
-			}
-			MonthReportItemEntity copyMonthReportItemEntity = new MonthReportItemEntity();
-			copyMonthReportItemEntity.setAvgDayReportCost(mrie.getAvgDayReportCost());
-			copyMonthReportItemEntity.setDate(mrie.getDate());
-			copyMonthReportItemEntity.setOtherPersons(mrie.getOtherPersons());
-			copyMonthReportItemEntity.setReportNumber(mrie.getReportNumber());
-			copyMonthReportItemEntity.setReportQuota(mrie.getReportQuota());
-			copyMonthReportItemEntity.setStudents(mrie.getStudents());
-			copyMonthReportItemEntity.setSumPersons(mrie.getSumPersons());
-			newMonthReportItemEntityList.add(copyMonthReportItemEntity);
-
 		}
 		
 		studentsPayment = studentsSum * QUOTA_PER_DINNER;
