@@ -137,7 +137,7 @@ public class MainController {
     
     @GetMapping("/dayreport-test-method")
     public void testDayReportGenerateAndSave(HttpServletRequest request){
-    	DayReport dayReportTest = DayReportTestUtils.createTestDayReport2();
+    	DayReport dayReportTest = DayReportTestUtils.createTestDayReport();
     	
 
     	GenerateDayReport generateDayReport = new GenerateDayReport(dayReportTest);
@@ -342,6 +342,8 @@ public class MainController {
 	        	monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
 	        			new ArrayList<MonthReportItemEntity>(), null);
 	        }   	
+	        
+	        monthReportService.save(monthReportEntity);
         }
         
         request.setAttribute(Attributes.MESSAGE, generateDayReport.getMessage());

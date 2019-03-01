@@ -64,15 +64,30 @@ public class MonthReportConverter {
 		newMonthReportItemEntity.setSumPersons(generateMonthReport.getInsertDayReport().getPersonsSum());
 		newMonthReportItemEntity.setReportQuota(dayReportEntity.getDayReportValue());
 		newMonthReportItemEntity.setAvgDayReportCost(dayReportEntity.getDayReportAvg());
+		monthReportItemEntityList.add(newMonthReportItemEntity);
 		newMonthReportItemEntityList.add(newMonthReportItemEntity);
 		
 		//sumujemy wartości z wszystkich raportów
-		//TODO usunąć wszystkie pozycje z bazy i zapisać ponownie. Utworzyć nową listę i do niej wrzucić starą listę bez id-ków
+		//TODO nie działa, trzeba to zrobić od nowa
 		for(MonthReportItemEntity mrie : monthReportItemEntityList) {
 			studentsSum += mrie.getStudents();
 			otherPersonsSum += mrie.getOtherPersons();
 			sumPersons += mrie.getSumPersons();
 			monthReportQuota += mrie.getReportQuota();
+			
+			if(mrie.getDate().equals(newMonthReportItemEntity.getDate())) {
+				continue;
+			}
+			MonthReportItemEntity copyMonthReportItemEntity = new MonthReportItemEntity();
+			copyMonthReportItemEntity.setAvgDayReportCost(mrie.getAvgDayReportCost());
+			copyMonthReportItemEntity.setDate(mrie.getDate());
+			copyMonthReportItemEntity.setOtherPersons(mrie.getOtherPersons());
+			copyMonthReportItemEntity.setReportNumber(mrie.getReportNumber());
+			copyMonthReportItemEntity.setReportQuota(mrie.getReportQuota());
+			copyMonthReportItemEntity.setStudents(mrie.getStudents());
+			copyMonthReportItemEntity.setSumPersons(mrie.getSumPersons());
+			newMonthReportItemEntityList.add(copyMonthReportItemEntity);
+
 		}
 		
 		studentsPayment = studentsSum * QUOTA_PER_DINNER;
@@ -93,7 +108,7 @@ public class MonthReportConverter {
 		monthReportEntity.setStudentsSum(studentsSum);
 		monthReportEntity.setSumPayments(Double.parseDouble(df.format(sumPayments).replace(",",".")));
 		monthReportEntity.setAvgMonthReportQuota(Double.parseDouble(df.format(avgMonthReportQuota).replace(",",".")));
-		monthReportEntity.setMonthReportItems(monthReportItemEntityList);
+		monthReportEntity.setMonthReportItems(newMonthReportItemEntityList);
 		monthReportEntity.setRemainedValue(Double.parseDouble(df.format(remainedValue).replace(",",".")));
 		monthReportEntity.setSumPersons(sumPersons);
 		
