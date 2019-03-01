@@ -47,7 +47,7 @@ public class DayReportTestUtils {
     	dayReport.setProduct("Kapusta,Arbuz,...");
     	dayReport.setAmount("2,4");
     	dayReport.setUnitprice("4.34,3.00");
-    	dayReport.setPositionValue("8.62,12.00");
+    	dayReport.setPositionValue("2.00,2.00");
     	dayReport.setNumber("5,1");
     	return dayReport;
 	}

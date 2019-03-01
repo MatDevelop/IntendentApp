@@ -55,6 +55,7 @@ public class MonthReportConverter {
 		
 		if(monthReportItemEntity != null) {
 			newMonthReportItemEntity.setIdMonthReportItem(monthReportItemEntity.getIdMonthReportItem());
+			monthReportItemEntityList.remove(monthReportItemEntity);
 		}
 		
 		newMonthReportItemEntity.setDate(dayReportEntity.getDate());
@@ -64,11 +65,14 @@ public class MonthReportConverter {
 		newMonthReportItemEntity.setSumPersons(generateMonthReport.getInsertDayReport().getPersonsSum());
 		newMonthReportItemEntity.setReportQuota(dayReportEntity.getDayReportValue());
 		newMonthReportItemEntity.setAvgDayReportCost(dayReportEntity.getDayReportAvg());
-		monthReportItemEntityList.add(newMonthReportItemEntity);
 		newMonthReportItemEntityList.add(newMonthReportItemEntity);
 		
-		//sumujemy wartości z wszystkich raportów
 		for(MonthReportItemEntity mrie : monthReportItemEntityList) {
+			newMonthReportItemEntityList.add(mrie);
+		}
+		
+		//sumujemy wartości z wszystkich raportów
+		for(MonthReportItemEntity mrie : newMonthReportItemEntityList) {
 			studentsSum += mrie.getStudents();
 			otherPersonsSum += mrie.getOtherPersons();
 			sumPersons += mrie.getSumPersons();
