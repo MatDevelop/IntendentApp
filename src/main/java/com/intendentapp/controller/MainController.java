@@ -137,7 +137,8 @@ public class MainController {
     
     @GetMapping("/dayreport-test-method")
     public void testDayReportGenerateAndSave(HttpServletRequest request){
-    	DayReport dayReportTest = DayReportTestUtils.createTestDayReport();
+    	DayReport dayReportTest = DayReportTestUtils.createTestDayReport2();
+    	
 
     	GenerateDayReport generateDayReport = new GenerateDayReport(dayReportTest);
         List<ProductEntity> productEntityList = new ArrayList<>();
@@ -175,9 +176,19 @@ public class MainController {
 	        MonthReportConverter monthReportConverter = new MonthReportConverter();
 	        if(!monthReportEntityDto.isEmpty()) {
 	        	monthReportEntity.setIdMonthReport(monthReportEntityDto.get(0).getIdMonthReport());
+	        	List<MonthReportItemEntity> monthReportItemEntityList = monthReportEntityDto.get(0).getMonthReportItems();
 	        	List<MonthReportItemEntity> monthReportItemEntity = monthReportItemService.findByReportDate(dayReportEntity.getDate());
-	        	monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
-	        			monthReportEntityDto.get(0).getMonthReportItems(), monthReportItemEntity.get(0));
+	        	for(MonthReportItemEntity mrie : monthReportItemEntityList) {
+	        		monthReportItemService.delete(mrie.getIdMonthReportItem());
+	        	}
+	        	if(monthReportItemEntity.isEmpty()) {
+	        		monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
+	        				monthReportItemEntityList, null);
+	        	}else {
+	        		monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
+	        				monthReportItemEntityList, monthReportItemEntity.get(0));
+	        	}
+	        	
 	        }else {
 	        	monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
 	        			new ArrayList<MonthReportItemEntity>(), null);
@@ -315,9 +326,18 @@ public class MainController {
 	        MonthReportConverter monthReportConverter = new MonthReportConverter();
 	        if(!monthReportEntityDto.isEmpty()) {
 	        	monthReportEntity.setIdMonthReport(monthReportEntityDto.get(0).getIdMonthReport());
+	        	List<MonthReportItemEntity> monthReportItemEntityList = monthReportEntityDto.get(0).getMonthReportItems();
 	        	List<MonthReportItemEntity> monthReportItemEntity = monthReportItemService.findByReportDate(dayReportEntity.getDate());
-	        	monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
-	        			monthReportEntityDto.get(0).getMonthReportItems(), monthReportItemEntity.get(0));
+	        	for(MonthReportItemEntity mrie : monthReportItemEntityList) {
+	        		monthReportItemService.delete(mrie.getIdMonthReportItem());
+	        	}
+	        	if(monthReportItemEntity.isEmpty()) {
+	        		monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
+	        				monthReportItemEntityList, null);
+	        	}else {
+	        		monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
+	        				monthReportItemEntityList, monthReportItemEntity.get(0));
+	        	}
 	        }else {
 	        	monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
 	        			new ArrayList<MonthReportItemEntity>(), null);

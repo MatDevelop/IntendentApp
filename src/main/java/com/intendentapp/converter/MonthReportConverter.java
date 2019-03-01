@@ -50,6 +50,9 @@ public class MonthReportConverter {
 		
 		DecimalFormat df = new java.text.DecimalFormat("0.00");
 		MonthReportItemEntity newMonthReportItemEntity = new MonthReportItemEntity();
+		List<MonthReportItemEntity> newMonthReportItemEntityList = new ArrayList<>();
+		
+		
 		if(monthReportItemEntity != null) {
 			newMonthReportItemEntity.setIdMonthReportItem(monthReportItemEntity.getIdMonthReportItem());
 		}
@@ -61,7 +64,7 @@ public class MonthReportConverter {
 		newMonthReportItemEntity.setSumPersons(generateMonthReport.getInsertDayReport().getPersonsSum());
 		newMonthReportItemEntity.setReportQuota(dayReportEntity.getDayReportValue());
 		newMonthReportItemEntity.setAvgDayReportCost(dayReportEntity.getDayReportAvg());
-		monthReportItemEntityList.add(newMonthReportItemEntity);
+		newMonthReportItemEntityList.add(newMonthReportItemEntity);
 		
 		//sumujemy wartości z wszystkich raportów
 		//TODO usunąć wszystkie pozycje z bazy i zapisać ponownie. Utworzyć nową listę i do niej wrzucić starą listę bez id-ków
@@ -92,6 +95,7 @@ public class MonthReportConverter {
 		monthReportEntity.setAvgMonthReportQuota(Double.parseDouble(df.format(avgMonthReportQuota).replace(",",".")));
 		monthReportEntity.setMonthReportItems(monthReportItemEntityList);
 		monthReportEntity.setRemainedValue(Double.parseDouble(df.format(remainedValue).replace(",",".")));
+		monthReportEntity.setSumPersons(sumPersons);
 		
 		return monthReportEntity;
 	}
