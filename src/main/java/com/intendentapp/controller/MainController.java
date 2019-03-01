@@ -287,7 +287,7 @@ public class MainController {
     //dodanie raportu dziennego
     @PostMapping("/adddayreport")
     public String addDayReport(@ModelAttribute DayReport dayReport, BindingResult bindingResult, HttpServletRequest request){
-    	GenerateDayReport generateDayReport = new GenerateDayReport(dayReport);	//TODO przetestować czy kwoty idą z kropką czy z przecinkiem
+    	GenerateDayReport generateDayReport = new GenerateDayReport(dayReport);
         List<ProductEntity> productEntityList = new ArrayList<>();
         
         for(String product : generateDayReport.getInsert().getProducts()){
@@ -328,6 +328,9 @@ public class MainController {
 	        	monthReportEntity.setIdMonthReport(monthReportEntityDto.get(0).getIdMonthReport());
 	        	List<MonthReportItemEntity> monthReportItemEntityList = monthReportEntityDto.get(0).getMonthReportItems();
 	        	List<MonthReportItemEntity> monthReportItemEntity = monthReportItemService.findByReportDate(dayReportEntity.getDate());
+	        	for(MonthReportItemEntity mrie : monthReportItemEntityList) {
+	        		monthReportItemService.delete(mrie.getIdMonthReportItem());
+	        	}
 	        	if(monthReportItemEntity.isEmpty()) {
 	        		monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
 	        				monthReportItemEntityList, null);
@@ -335,6 +338,7 @@ public class MainController {
 	        		monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
 	        				monthReportItemEntityList, monthReportItemEntity.get(0));
 	        	}
+	        	
 	        }else {
 	        	monthReportEntity = monthReportConverter.convert(monthReportEntity, dayReportEntity, generateDayReport.getGenerateMonthReport(),
 	        			new ArrayList<MonthReportItemEntity>(), null);
