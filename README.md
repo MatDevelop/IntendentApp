@@ -2,7 +2,7 @@
  Aplikacja webowa dla intendenta. Aplikacja pozwala na wprowadzanie raportów dziennych z rozliczenia dziennie zużytych produktów do posiłków, raportów miesięcznych oraz zestawień sprzedaży sumujących liczbę wpłat konsumentów.
 ## Opis działania aplikacji
 
-  Opis działania aplikacji znajduję sie w pliku [HowItWorks](HowItWorks.pdf)
+  Opis działania aplikacji znajduje się w pliku [HowItWorks](HowItWorks.pdf)
   
   Skrypt tworzenia bazy danych znajduje się w pliku [intendentdbsql.txt](intendentdbsql.txt)
 
